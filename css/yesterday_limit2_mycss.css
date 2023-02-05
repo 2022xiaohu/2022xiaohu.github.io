@@ -1,0 +1,207 @@
+.tb1 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb2 {
+    width: 30px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb3 {
+    width: 50px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb4 {
+    width: 50px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb5 {
+    width: 30px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb6 {
+    width: 50px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb7 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb8 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb9 {
+    width: 150px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb10 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb11 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb12 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb13 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb14 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb15 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb16 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb17 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb18 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.tb19 {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    /* color: red; */
+}
+
+.code {
+    font-size: 10px;
+}
+
+.name {
+    font-size: 15px;
+}
+
+table.altrowstable {
+    font-family: verdana, arial, sans-serif;
+    font-size: 14px;
+    /* color: rgb(255, 255, 255); */
+    border-width: 1px;
+    border-color: #a9c6c9;
+    border-collapse: collapse;
+}
+
+table.altrowstable th {
+    border-width: 1px;
+    padding: 14px;
+    border-style: solid;
+    border-color: #a9c6c9;
+    /* color: rgb(255, 255, 255); */
+}
+
+table.altrowstable td {
+    border-width: 0.5px;
+    padding: 0px;
+    border-style: solid;
+    border-color: #a9c6c9;
+    /* color: rgb(255, 255, 255); */
+}
+
+.green {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    color: green;
+}
+
+.blue {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    color: rgba(29, 29, 170, 0.753);
+}
+
+.red {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    color: red;
+}
+
+.black {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    color: black;
+}
+
+.yellow {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    color: yellow;
+}
+
+.white {
+    width: 70px;
+    font-size: 12px;
+    text-align: center;
+    color: white;
+}

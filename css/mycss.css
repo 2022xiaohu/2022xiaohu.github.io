@@ -1,0 +1,141 @@
+.tb1 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb2 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb3 {
+    width: 50px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb4 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb5 {
+    width: 180px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb6 {
+    width: 90px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb7 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb8 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb9 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb10 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb11 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tb12 {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.code {
+    font-size: 14px;
+}
+
+.name {
+    font-size: 15px;
+}
+
+table.altrowstable {
+    font-family: verdana, arial, sans-serif;
+    font-size: 14px;
+    /*color: rgb(255, 255, 0);*/
+    border-width: 1px;
+    border-color: #a9c6c9;
+    border-collapse: collapse;
+}
+
+table.altrowstable th {
+    border-width: 1px;
+    padding: 14px;
+    border-style: solid;
+    border-color: #a9c6c9;
+    /*color: rgb(255, 255, 255);*/
+}
+
+table.altrowstable td {
+    border-width: 0.5px;
+    padding: 0px;
+    border-style: solid;
+    border-color: #a9c6c9;
+    /*color: rgb(255, 255, 255);*/
+}
+
+.green {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+    color: green;
+}
+
+.red {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+    color: red;
+}
+
+.black {
+    width: 70px;
+    font-size: 14px;
+    text-align: center;
+    color: black;
+}
+
+
+/* 表格 */
+
+table {
+    /* background-color: rgb(31, 33, 45); */
+    color: rgb(200, 200, 200);
+}
+
+body {
+    /*CSS margin(外边距)属性定义元素周围的空间*/
+    margin: 0;
+    /* CSS padding（填充）是一个简写属性，定义元素边框与元素内容之间的空间，即上下左右的内边距 */
+    padding: 0;
+    background-color: rgb(31, 33, 45);
+}

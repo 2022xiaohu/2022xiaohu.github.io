@@ -1,0 +1,391 @@
+﻿ .over-chart {
+     position: relative;
+ }
+
+ .cfloat-win {
+     position: fixed;
+     z-index: 59;
+     background-color: #fff;
+     border: 1px solid #dedede;
+     left: 0;
+     top: 0;
+     width: 460px;
+     height: 280px;
+     display: none;
+     -webkit-box-shadow: 0 1px 8px 1px rgba(0, 0, 0, 0.2);
+     -ms-box-shadow: 0 1px 8px 1px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: 0 1px 8px 1px rgba(0, 0, 0, 0.2);
+ }
+
+ .cfloat-win .cft-body {
+     position: relative;
+     width: 100%;
+     height: 100%;
+     padding: 10px 15px;
+ }
+
+ .cft-body .arowbar {
+     position: absolute;
+     width: 22px;
+     height: 100%;
+     top: 0;
+     left: -22px;
+ }
+
+ .cft-body .arowbar>div {
+     width: 100%;
+     height: 24px;
+     float: right;
+     margin-top: 110px;
+     background-position: right center;
+     background-repeat: no-repeat;
+     background-size: auto 100%;
+ }
+
+ .cft-body .rightAB {
+     left: initial;
+     right: -22px;
+ }
+
+ .cft-body .rightAB>div {
+     float: left;
+     background-position: left center;
+ }
+
+ .cft-head {
+     height: 25px;
+     line-height: 25px;
+     position: relative;
+     text-align: center;
+     margin-bottom: 10px;
+ }
+
+ .cft-head .sname {
+     position: absolute;
+     height: 100%;
+     left: 0;
+     top: 0;
+     font-size: 18px;
+ }
+
+ .cft-head ul {
+     display: inline-block;
+     height: 100%;
+     margin: 0;
+     border: 1px solid #cf0f0f;
+     box-sizing: border-box;
+     border-right: none;
+     overflow: hidden;
+     padding: 0;
+ }
+
+ .cft-head ul li {
+     float: left;
+     list-style: none;
+     line-height: 25px;
+     border-right: 1px solid #cf0f0f;
+     width: 50px;
+     text-align: center;
+     box-sizing: border-box;
+     color: #cf0f0f;
+     cursor: pointer;
+ }
+
+ .cft-head ul .atv {
+     background-color: #cf0f0f;
+     color: #fff;
+     cursor: default;
+ }
+
+ .cft-body .cft-box {
+     width: 100%;
+     height: 220px;
+     position: relative;
+     overflow: hidden;
+ }
+
+ .cft-box .cft-cb {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     top: 0;
+     left: 0;
+     z-index: 0;
+     background-color: #fff;
+ }
+
+ .cft-box .cft-cb>div {
+     width: 100%;
+     height: 100%;
+     position: relative;
+ }
+
+ .cft-box>.atv {
+     z-index: 10;
+ }
+
+ .cft-box .mpMChart_ .vol-sel {
+     border-right: 1px solid #ddd;
+ }
+
+ .cfloat-smwin {
+     width: 280px;
+     height: 145px;
+ }
+
+ .cfloat-smwin .cft-body {
+     padding: 8px 8px;
+ }
+
+ .cfloat-smwin .cft-sbox {
+     width: 100%;
+     height: 100%;
+     position: relative;
+ }
+
+ .qlgMChart {
+     position: relative;
+     overflow: visible;
+     transform: translateZ(0);
+ }
+
+ .qlgMChart>canvas {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     top: 0;
+     left: 0;
+     display: block;
+ }
+
+ .qlgMChart>canvas[data-c="bg"] {
+     z-index: 10;
+ }
+
+ .qlgMChart>canvas[data-c="se"] {
+     z-index: 11;
+ }
+
+ .qlgMChart>canvas[data-c="ml"] {
+     z-index: 12;
+ }
+
+ .qlgMChart>canvas[data-c="gt"] {
+     z-index: 20;
+ }
+
+ .qlgOptionChart {
+     position: relative;
+     overflow: visible;
+     transform: translateZ(0);
+ }
+
+ .qlgOptionChart>canvas {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     top: 0;
+     left: 0;
+     display: block;
+     cursor: default;
+ }
+
+ .mpMChart_ {
+     position: relative;
+     overflow: visible;
+     transform: translateZ(0);
+ }
+
+ .mpMChart_>canvas {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     top: 0;
+     left: 0;
+     display: block;
+ }
+
+ .mpMChart_>canvas[data-c="bg"] {
+     z-index: 10;
+ }
+
+ .mpMChart_>canvas[data-c="line"] {
+     z-index: 12;
+ }
+
+ .mpMChart_>canvas[data-c="vol"] {
+     z-index: 12;
+ }
+
+ .mpMChart_>canvas[data-c="over"] {
+     z-index: 16;
+ }
+
+ .mpMChart_ .zoomBar {
+     height: 24px;
+     width: 60px;
+     position: absolute;
+     left: 0;
+     top: 50px;
+     z-index: 30;
+     display: -webkit-box;
+     -webkit-box-align: center;
+     -webkit-box-pack: justify;
+     pointer-events: none;
+ }
+
+ .mpMChart_ .zoomBar>div {
+     width: 24px;
+     height: 100%;
+     background-size: auto 100%;
+     background-position: center;
+     background-repeat: no-repeat;
+     pointer-events: all;
+     cursor: pointer;
+ }
+
+ .mpMChart_ .zoomBar .enlarge {
+     /* background-image: url(btn_chart_zoom_out.png); */
+ }
+
+ .mpMChart_ .zoomBar .narrow {
+     /* background-image: url(btn_chart_zoom_in.png); */
+ }
+
+ .mpMChart_ .bonbar {
+     height: 24px;
+     line-height: 25px;
+     position: absolute;
+     left: 0;
+     top: 300px;
+     font-size: 13px;
+     z-index: 30;
+ }
+
+ .mpMChart_ .bonbar .li {
+     height: 100%;
+     width: 60px;
+     text-align: center;
+     float: left;
+     margin-right: 1px;
+     background-color: #cdcdcd;
+     cursor: pointer;
+     font-size: 12px;
+ }
+
+ .mpMChart_ .bonbar .li:hover {
+     background-color: #c0c0c0;
+ }
+
+ .mpMChart_ .bonbar .atv,
+ .mpMChart_ .bonbar .atv:hover {
+     background-color: #cf0f0f;
+     cursor: default;
+     color: #fff;
+ }
+
+ .mpMChart_ .recoveryBon {
+     height: 24px;
+     line-height: 24px;
+     position: absolute;
+     right: 0;
+     top: 300px;
+     font-size: 13px;
+     z-index: 30;
+     border: 1px solid #717171;
+     width: 65px;
+     text-align: center;
+     cursor: pointer;
+ }
+
+ .mpMChart_ .fb_bon {
+     cursor: default;
+     border: 1px solid #d5d5d5;
+     color: #d5d5d5;
+ }
+
+ .mpMChart_ .zj-over {
+     position: absolute;
+     width: 100%;
+     height: 100px;
+     z-index: 15;
+     top: 300px;
+     left: 0;
+ }
+
+ .mpMChart_ .zj-over>div {
+     width: 100%;
+     height: 100%;
+     position: relative;
+     display: none;
+ }
+
+ .mpMChart_ .zj-over .li {
+     position: absolute;
+     left: 0;
+     top: 50px;
+     width: 17px;
+     height: 17px;
+     background-color: #fff;
+     border: 3px solid #cf0f0f;
+     border-radius: 20px;
+     cursor: pointer;
+ }
+
+ .mpMChart_ .zj-over .fb .li {
+     border-color: #bebebe;
+ }
+
+ .mpMChart_ .vol-sel {
+     width: 80px;
+     border: 1px solid #ddd;
+     border-right: none;
+     background-color: #fff;
+     text-align: center;
+     font-size: 12px;
+     height: 21px;
+     padding-bottom: 1px;
+     position: absolute;
+     right: 0;
+     z-index: 19;
+     padding-left: 8px;
+ }
+
+ .mpMChart_ .v-RowLoading {
+     z-index: 49;
+     background-color: #fff;
+ }
+
+ .cft-head .addBon {
+     float: right;
+     border: 1px solid #cf0f0f;
+     font-size: 14px;
+     padding: 0 10px;
+     color: #cf0f0f;
+     line-height: 24px;
+     position: relative;
+     cursor: pointer;
+ }
+
+ .cft-head .addBon[data-fb="1"] {
+     cursor: default;
+     color: #c4c4c4;
+     border: 1px solid #c4c4c4
+ }
+
+ .cft-head .addBon .v-RowLoading {
+     background-color: #fff;
+     z-index: 10;
+ }
+
+ .addBon .RowLoading .ld {
+     width: 14px;
+     margin-right: 0;
+     margin-bottom: -2px;
+ }
+
+ .addBon .reLoad_tip img {
+     width: 13px;
+     margin-right: 0;
+     margin-bottom: -2px;
+ }

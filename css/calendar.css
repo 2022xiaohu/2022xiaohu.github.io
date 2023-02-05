@@ -1,0 +1,50 @@
+.box {
+            width: 400px;
+            height: 100px;
+            text-align: center;
+            margin: 50px auto;
+        }
+
+        .box p {
+            background: pink;
+        }
+
+        /* 向上箭头 */
+
+        .to_top {
+            width: 0;
+            height: 0;
+            border-bottom: 30px solid #f0f;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+        }
+
+        /* 向左箭头 */
+
+        .to_left {
+            width: 0;
+            height: 0;
+            border-right: 10px solid #ffd900;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        /* 向右箭头 */
+
+        .to_right {
+            width: 0;
+            height: 0;
+            border-left: 10px solid #ffd900;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        /* 向下箭头 */
+
+        .to_bottom {
+            width: 0;
+            height: 0;
+            border-top: 30px solid skyblue;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+        }
