@@ -129,7 +129,7 @@
 
         function auto_update(Func) {
             Func()
-            data = get_server_data();
+            // data = get_server_data();
             if (true) {
                 ID_THREAD = setInterval(is_running, 1000 * 3, Func); //指定3秒刷新一次
             } else {
