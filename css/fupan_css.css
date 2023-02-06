@@ -712,9 +712,9 @@ table tr td.bs {
 }
 
 .table-one tr td.gbnews {
-    height: 6px;
-    line-height: 6px;
-    font-size: 6px;
+    height: 12px;
+    line-height: 12px;
+    font-size: 12px;
     padding: 0;
     width: 45px;
     text-align: center;
