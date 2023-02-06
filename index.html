@@ -5,7 +5,7 @@
     <!-- <meta charset="utf-8"> -->
     <title>涨停表现</title>
 </head>
-<link href="./ico/favicon.ico" rel="stylesheet">
+<!-- <link href="./ico/favicon.ico" rel="stylesheet"> -->
 <link type="text/css" rel="stylesheet" href="./css/fupan_css.css">
 <link type="text/css" rel="stylesheet" href="./css/calendar.css">
 <link type="text/css" rel="stylesheet" href="./kpl/com.css">
@@ -208,7 +208,7 @@
     function οnclick_to_left() {
         dates = document.getElementById("meeting").value
         console.log(dates);
-        data = get_history_date()['klines']//获取历史日期
+        data = history_date_eastmoney()//获取历史日期
         _indexof = data.indexOf(dates, 0) - 1 //匹配索引
         document.getElementById("meeting").value = data[_indexof] //设置日期
         show_form(data[_indexof])
@@ -224,7 +224,7 @@
     function οnclick_to_right() {
         dates = document.getElementById("meeting").value
         console.log(dates);
-        data = get_history_date()['klines']//获取历史日期
+        data = history_date_eastmoney()//获取历史日期
         _indexof = data.indexOf(dates, 0) + 1 //匹配索引
         document.getElementById("meeting").value = data[_indexof] //设置日期
         show_form(data[_indexof])
@@ -271,7 +271,7 @@
         clearInterval(ID_THREAD)
         var dates = document.getElementById(x).value //获取选择的日期
         show_form(dates)
-        data = get_history_date()['data']
+        data = history_date_eastmoney()
         _indexof = data.indexOf(dates, 0) - 1
         _stocks55 = get_limit2_data_history('fourBoardStocksYesterdayHistory', data[_indexof], 'history', '历史未涨停的四板个股', history_55)
         _stocks44 = get_limit2_data_history('threeBoardStocksYesterdayHistory', data[_indexof], 'history44', '历史未涨停的三板个股', history_44)
