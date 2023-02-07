@@ -210,11 +210,11 @@
         console.log(dates);
         data = all_data//获取历史日期
         _indexof = data.indexOf(dates, 0) - 1 //匹配索引
-        if(-1 == _indexof){
+        if (-1 == _indexof) {
             return
         }
         document.getElementById("meeting").value = data[_indexof] //设置日期
-        
+
         // _stocks55 = get_limit2_data_history('fourBoardStocksYesterdayHistory', data[_indexof], 'history', '历史未涨停的四板个股', history_55)
         // _stocks44 = get_limit2_data_history('threeBoardStocksYesterdayHistory', data[_indexof], 'history44', '历史未涨停的三板个股', history_44)
         // _stocks33 = get_limit2_data_history('twoBoardStocksYesterdayHistory', data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
@@ -228,7 +228,7 @@
         twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
         limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
-        limit_broke_history(data[_indexof+1], 'broke', '炸板', history_broke)
+        limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
     }
 
     // 右箭头回调函数
@@ -237,14 +237,14 @@
         console.log(dates);
         data = all_data//获取历史日期
         _indexof = data.indexOf(dates, 0) + 1 //匹配索引
-        if(data.length == _indexof){
+        if (data.length == _indexof) {
             return
         }
         document.getElementById("meeting").value = data[_indexof] //设置日期
         //判断是否是最后一个交易日
-        if(data.length == _indexof+1){
+        if (data.length == _indexof + 1) {
             run()
-        }else{
+        } else {
             show_form(data[_indexof])
         }
         _indexof = _indexof - 1
@@ -253,7 +253,7 @@
         twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
         limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
-        limit_broke_history(data[_indexof+1], 'broke', '炸板', history_broke)
+        limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
 
         // _stocks55 = get_limit2_data_history('fourBoardStocksYesterdayHistory', data[_indexof - 1], 'history', '历史未涨停的四板个股', history_55)
         // _stocks44 = get_limit2_data_history('threeBoardStocksYesterdayHistory', data[_indexof - 1], 'history44', '历史未涨停的三板个股', history_44)
@@ -413,17 +413,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '0',
-                    'a': 'DailyLimitPerformance',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '4',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '1',
+                'Order': '0',
+                'a': 'DailyLimitPerformance',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '4',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '1',
             },
             async: true,
             dataType: 'text',
@@ -448,17 +448,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '0',
-                    'a': 'DailyLimitPerformance',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '4',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '2',
+                'Order': '0',
+                'a': 'DailyLimitPerformance',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '4',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '2',
             },
             async: true,
             dataType: 'text',
@@ -482,17 +482,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '1',
-                    'a': 'DailyLimitPerformance2',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '5',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '2',
+                'Order': '1',
+                'a': 'DailyLimitPerformance2',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '5',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '2',
             },
             async: true,
             dataType: 'text',
@@ -516,17 +516,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '0',
-                    'a': 'DailyLimitPerformance',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '4',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '3',
+                'Order': '0',
+                'a': 'DailyLimitPerformance',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '4',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '3',
             },
             async: true,
             dataType: 'text',
@@ -584,17 +584,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '0',
-                    'a': 'DailyLimitPerformance',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '4',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '4',
+                'Order': '0',
+                'a': 'DailyLimitPerformance',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '4',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '4',
             },
             async: true,
             dataType: 'text',
@@ -655,17 +655,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '0',
-                    'a': 'DailyLimitPerformance',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '4',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '5',
+                'Order': '0',
+                'a': 'DailyLimitPerformance',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '4',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '5',
             },
             async: true,
             dataType: 'text',
@@ -692,17 +692,17 @@
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
             type: 'POST',
             data: {
-                    'Order': '1',
-                    'a': 'DailyLimitPerformance2',
-                    'st': '100',
-                    'apiv': 'w29',
-                    'Type': '5',
-                    'c': 'HisHomeDingPan',
-                    'PhoneOSNew': '1',
-                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-                    'index': '0',
-                    'Day': date,
-                    'PidType': '5',
+                'Order': '1',
+                'a': 'DailyLimitPerformance2',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '5',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '5',
             },
             async: true,
             dataType: 'text',
@@ -1008,9 +1008,9 @@
             success: function (data) {
                 var data = eval('(' + data + ')')['info'][0];//json格式化数据
                 // console.log(data);
-                if(!callback || callback == false){
+                if (!callback || callback == false) {
                     set_table2(data, id, caption);
-                }else{
+                } else {
                     callback(data);
                 }
             },
@@ -1046,9 +1046,9 @@
             success: function (data) {
                 var data = eval('(' + data + ')')['info'][0];//json格式化数据
                 // console.log(data);
-                if(!callback|| callback == false){
+                if (!callback || callback == false) {
                     set_table2(data, id, caption);
-                }else{
+                } else {
                     callback(data);
                 }
             },
@@ -1084,9 +1084,9 @@
             success: function (data) {
                 var data = eval('(' + data + ')')['info'][0];//json格式化数据
                 // console.log(data);
-                if(!callback || callback == false){
+                if (!callback || callback == false) {
                     set_table2(data, id, caption);
-                }else{
+                } else {
                     callback(data);
                 }
             },
@@ -1293,7 +1293,7 @@
         get_stocks(dates)// 获取历史四板以上股票代码3
         run(data);
         ID_THREAD = auto_update(run)
-        
+
     }
     function run(dates = all_data) {
         get_daily_limit_performance1('limit1', '一板');
@@ -1517,9 +1517,16 @@
             } else
                 m_html += "<tr class=\"cur\">"
             if (m_list[i_row][16] == 1) {
-                m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                if (m_list[i_row][0].slice(0, 1) == '3') {
+                    m_html += "<td class=\"red gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                } else {
+                    m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                }
             } else {
-                m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
+                if (m_list[i_row][0].slice(0, 1) == '3') {
+                    m_html += "<td class=\"red td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                } else
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
             }
             m_html += "<td>" + format_date(new Date(parseInt(m_list[i_row][4]) * 1000)) + "</td>"
             //     //数据统计
@@ -1565,9 +1572,16 @@
             } else
                 m_html += "<tr class=\"cur\">"
             if (m_list[i_row][16] == 1) {
-                m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                if (m_list[i_row][0].slice(0, 1) == '3') {
+                    m_html += "<td class=\"red gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                } else {
+                    m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                }
             } else {
-                m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
+                if (m_list[i_row][0].slice(0, 1) == '3') {
+                    m_html += "<td class=\"red td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                } else
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
             }
             m_html += "<td>" + m_list[i_row][15] + "</td>"
             m_html += "<td>" + m_list[i_row][6] + "</td>"
