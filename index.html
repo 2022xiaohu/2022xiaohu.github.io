@@ -365,7 +365,6 @@
                 var data = eval('(' + data + ')')['info'][0];//json格式化数据
                 // console.log(data);
                 fourBoardStocksYesterdayHistoryCallback(data);
-                ID_THREAD = auto_update(run)
             },
             error: function (msg) {
                 console.log(msg);
@@ -1291,9 +1290,10 @@
         console.log(formatDate(date));
         document.getElementById("meeting").value = dates[dates.length - 1] //设置日期
 
-        get_stocks(dates)// 获取历史四板以上股票代码
-        // ID_THREAD = auto_update(run)
-        // run(data);
+        get_stocks(dates)// 获取历史四板以上股票代码3
+        run(data);
+        ID_THREAD = auto_update(run)
+        
     }
     function run(dates = all_data) {
         get_daily_limit_performance1('limit1', '一板');
