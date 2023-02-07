@@ -1517,13 +1517,13 @@
             } else
                 m_html += "<tr class=\"cur\">"
             if (m_list[i_row][16] == 1) {
-                if (m_list[i_row][0].slice(0, 1) == '3') {
+                if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 2) == '688') {
                     m_html += "<td class=\"red gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
                 } else {
                     m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
                 }
             } else {
-                if (m_list[i_row][0].slice(0, 1) == '3') {
+                if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 2) == '688') {
                     m_html += "<td class=\"red td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
                 } else
                     m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
@@ -1572,13 +1572,13 @@
             } else
                 m_html += "<tr class=\"cur\">"
             if (m_list[i_row][16] == 1) {
-                if (m_list[i_row][0].slice(0, 1) == '3') {
+                if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 2) == '688') {
                     m_html += "<td class=\"red gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
                 } else {
                     m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
                 }
             } else {
-                if (m_list[i_row][0].slice(0, 1) == '3') {
+                if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 2) == '688') {
                     m_html += "<td class=\"red td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
                 } else
                     m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
