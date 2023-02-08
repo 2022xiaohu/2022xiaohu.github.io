@@ -100,7 +100,8 @@
             </div>
 
         </div>
-
+        <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
+        </div>
         <div class="table-one" style="float:left;width:364px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
                 <table id="broke" cellspacing="0"></table>
@@ -119,6 +120,7 @@
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
                 <table id="history-all-four" cellspacing="0"></table>
             </div>
+
         </div>
     </div>
 </body>
@@ -1667,7 +1669,11 @@
             } else
                 m_html += "<tr class=\"cur\">"
 
-            m_html += "<td>" + m_list[i_row][1] + "</td>"
+            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {
+                m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            } else {
+                m_html += "<td class=\" td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            }
             // 设置颜色
             if (m_list[i_row][4] > 0) {
                 m_html += "<td class=\"red\">" + m_list[i_row][4] + "</td>"
@@ -1701,7 +1707,12 @@
             } else {
                 m_html += "<tr class=\"cur\">"
             }
-            m_html += "<td>" + m_list[i_row][1] + "</td>"//股票名称
+            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {
+                m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            } else {
+                m_html += "<td class=\" td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            }
+
             // 设置涨幅颜色
             if (m_list[i_row][4] > 0) {
                 m_html += "<td class=\"red\">" + m_list[i_row][4] + "</td>"
