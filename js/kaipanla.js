@@ -1,5 +1,5 @@
 // 获取股票历史涨幅
-function stocksHistory(date) {
+function stocksHistory(date, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -30,6 +30,7 @@ function stocksHistory(date) {
         success: function (data) {
             var data = eval('(' + data + ')');//json格式化数据
             console.log(data);
+            callback(data)
         },
         error: function (msg) {
             console.log(msg);

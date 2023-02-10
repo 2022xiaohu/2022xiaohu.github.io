@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <meta charset="utf-8"> -->
+    <title>涨停表现</title>
+</head>
+
+<script type="text/javascript" src="./js/kaipanla.js"></script>
+<!-- <script type="text/javascript" src="./js/update.js"></script> -->
+<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+<!-- <script src="./js/update.js"></script> -->
+<script src="./js/show_message.js"></script>
+
+<script src="./js/kaipanla.js"></script>
+
+<!-- <script src="./kpl/jquery.js"></script> -->
+<script src="./kpl/com.js"></script>
+<!--分时-->
+<script src="./kpl/floatMChart.js"></script>
+<!--K线-->
+<script src="./kpl/floatKChart.js"></script>
+<script src="./kpl/fChart.js"></script>
+
+<link type="text/css" rel="stylesheet" href="./css/fupan_css.css">
+<link type="text/css" rel="stylesheet" href="./css/calendar.css">
+<link type="text/css" rel="stylesheet" href="./kpl/com.css">
+<link type="text/css" rel="stylesheet" href="./kpl/fChart.css">
+<link type="text/css" rel="stylesheet" href="./kpl/mpage.css">
+
+<body>
+    <div class="table-one" style="float:right;width:220px;">
+        <div style="position:fixed;">
+            <div style="float:left;">
+                <label for="meeting">选择日期：</label>
+            </div>
+
+            <div style="float:left;">
+                <div class="to_left" onclick="οnclick_to_left()"></div>
+
+            </div>
+            <div style="float:left;">
+                <input id="meeting" type="date" onchange="upperCase(this.id)" />
+            </div>
+
+            <div style="float:left;">
+                <div class="to_right" onclick="οnclick_to_right()"></div>
+            </div>
+        </div>
+    </div>
+    <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
+        <table id="table-list-sort" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="width:68px">股票名称</th>
+                    <th style="width:40px">涨幅</th>
+                    <th style="width:40px">涨速</th>
+                    <th style="width:60px">成交额</th>
+                    <th style="width:180px">板块</th>
+                </tr>
+            </thead>
+            <tbody id="table-list"></tbody>
+        </table>
+    </div>
+
+</body>
+<script type="text/javascript">
+    //当 DOM（文档对象模型） 已经加载，并且页面（包括图像）已经完全呈现时，会发生 ready 事件。
+    $(document).ready(function () {
+        onload();
+    });
+
+
+    function onload() {
+        var int = self.setInterval("run()", 3000);
+        // auto_update(run)
+    }
+
+    function run() {
+        stocksHistory('2023-02-10', setTable)
+    }
+
+    function formatMoney(money) {
+            //金钱转换
+            if (money > 0) {
+                if (money / 10000 > 10000) {
+                    return (money / 100000000).toFixed(2) + "亿"
+                } else if (money / 10000 > 1) {
+                    return (money / 10000).toFixed(0) + "万"
+                }
+            } else {
+                money = Math.abs(money);
+                if (money / 10000 > 10000) {
+                    return "-" + (money / 100000000).toFixed(2) + "亿"
+                } else if (money / 10000 > 1) {
+                    return "-" + (money / 10000).toFixed(0) + "万"
+                }
+            }
+        }
+
+    // 设置表格
+    function setTable(data) {
+        all_theme = [];
+        var m_html = ""
+        var m_th = ""
+        var m_list = data['list']
+        for (var i_row = 0; i_row < m_list.length; i_row++) {
+            if (i_row % 2 == 0) {
+                m_html += "<tr>"
+            } else {
+                m_html += "<tr class=\"cur\">"
+            }
+            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {
+                m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            } else {
+                m_html += "<td class=\" td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            }
+
+            // 设置涨幅颜色
+            if (m_list[i_row][6] > 0) {
+                //判断是否涨停
+                if(m_list[i_row][23].indexOf('板')!=-1){
+                    m_html += "<td class=\"red rbnews\">" + m_list[i_row][6] + "</td>"
+                }else{
+                    m_html += "<td class=\"red\">" + m_list[i_row][6] + "</td>"
+                }
+            } else {
+                m_html += "<td class=\"gre\">" + m_list[i_row][6] + "</td>"
+            }
+            // 设置涨速颜色
+            if (m_list[i_row][9] > 0) {
+                m_html += "<td class=\"red\">" + m_list[i_row][9] + "</td>"
+            } else {
+                m_html += "<td class=\"gre\">" + m_list[i_row][9] + "</td>"
+            }
+
+            m_html += "<td>" + formatMoney(m_list[i_row][7]) + "</td>"//成交额
+            m_html += "<td>" + m_list[i_row][4] + "</td>"//成交额
+            m_html += "</tr>"
+        }
+        var tb = document.getElementById('table-list'); //获取表格的dom节点
+        if (m_list.length == 0) {
+            tb.innerHTML = m_th + ''
+        } else
+            tb.innerHTML = m_th + m_html
+
+        $("#broke-history-id").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
+    }
+</script>
+
+</html>
