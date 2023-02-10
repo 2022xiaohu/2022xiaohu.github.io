@@ -5,7 +5,10 @@
     <!-- <meta charset="utf-8"> -->
     <title>涨停表现</title>
 </head>
-<!-- <link href="./ico/favicon.ico" rel="stylesheet"> -->
+
+<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./js/jquery.tablesorter.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="./css/fupan_css.css">
 <link type="text/css" rel="stylesheet" href="./css/calendar.css">
 <link type="text/css" rel="stylesheet" href="./kpl/com.css">
@@ -14,10 +17,10 @@
 
 <script src="./js/update.js"></script>
 <script src="./js/show_message.js"></script>
-<script src="./js/jquery-2.1.1.min.js"></script>
+
 <script src="./js/kaipanla.js"></script>
 
-<script src="./kpl/jquery.js"></script>
+<!-- <script src="./kpl/jquery.js"></script> -->
 <script src="./kpl/com.js"></script>
 <!--分时-->
 <script src="./kpl/floatMChart.js"></script>
@@ -26,78 +29,200 @@
 <script src="./kpl/fChart.js"></script>
 
 <body>
-    <div class="table-one" style="float:left;">
-        <div class="table-one" style="float:left;position:fixed">
-            <div>
-                <div style="float:left;">
-                    <label for="meeting">选择日期：</label>
-                </div>
+    <div class="table-one" style="float:right;width:220px;">
+        <div style="position:fixed;">
+            <div style="float:left;">
+                <label for="meeting">选择日期：</label>
+            </div>
 
-                <div style="float:left;">
-                    <div class="to_left" onclick="οnclick_to_left()"></div>
+            <div style="float:left;">
+                <div class="to_left" onclick="οnclick_to_left()"></div>
 
-                </div>
-                <div style="float:left;">
-                    <input id="meeting" type="date" onchange="upperCase(this.id)" />
-                </div>
+            </div>
+            <div style="float:left;">
+                <input id="meeting" type="date" onchange="upperCase(this.id)" />
+            </div>
 
-                <div style="float:left;">
-                    <div class="to_right" onclick="οnclick_to_right()"></div>
-                </div>
+            <div style="float:left;">
+                <div class="to_right" onclick="οnclick_to_right()"></div>
             </div>
         </div>
     </div>
+    <!-- <div class="table-one" style="float:left;width:100%;height:20px;"></div> -->
     <div class="table-one" style="float:left;width:100%;height:100%;">
         <div class="table-one" style="float:left;width:250px;height:100%;overflow:auto;">
-            <table id="limit1" cellspacing="0"></table>
+            <table id="limit-1" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th id="name" style="width:68px">股票名称</th>
+                        <th id="time" style="width:58px">涨停时间</th>
+                        <th id="status" style="width:28px">状态</th>
+                        <th id="theme" style="width:98px">涨停原因</th>
+                    </tr>
+                </thead>
+                <tbody id="limit1"></tbody>
+            </table>
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:364px;height:100%;">
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit2" cellspacing="0"></table>
+                <table id="limit-2" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:58px">涨停时间</th>
+                            <th id="status" style="width:28px">状态</th>
+                            <th id="theme" style="width:98px">涨停原因</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit2"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:70%;overflow:auto;">
-                <table id="limit22" cellspacing="0"></table>
+                <table id="limit-22" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:68px">状态</th>
+                            <th id="status" style="width:180px">板块</th>
+                            <th id="theme" style="width:40px">涨幅</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit22"></tbody>
+                </table>
             </div>
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:364px;height:100%;">
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit3" cellspacing="0"></table>
+                <table id="limit-3" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:58px">涨停时间</th>
+                            <th id="status" style="width:28px">状态</th>
+                            <th id="theme" style="width:98px">涨停原因</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit3"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit33" cellspacing="0"></table>
+                <table id="limit-33" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:68px">状态</th>
+                            <th id="status" style="width:180px">板块</th>
+                            <th id="theme" style="width:40px">涨幅</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit33"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="history33" cellspacing="0"></table>
+                <table id="history-33" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:82px">状态</th>
+                            <th id="status" style="width:180x">板块</th>
+                            <th id="theme" style="width:40px">昨日</th>
+                            <th id="theme" style="width:40px">实时</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history33"></tbody>
+                </table>
             </div>
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:364px;height:100%;">
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit4" cellspacing="0"></table>
+                <table id="limit-4" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:58px">涨停时间</th>
+                            <th id="status" style="width:28px">状态</th>
+                            <th id="theme" style="width:98px">涨停原因</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit4"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit44" cellspacing="0"></table>
+                <table id="limit-44" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:68px">状态</th>
+                            <th id="status" style="width:180px">板块</th>
+                            <th id="theme" style="width:40px">涨幅</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit44"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="history44" cellspacing="0"></table>
+                <table id="history-44" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:82px">状态</th>
+                            <th id="status" style="width:180x">板块</th>
+                            <th id="theme" style="width:40px">昨日</th>
+                            <th id="theme" style="width:40px">实时</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history44"></tbody>
+                </table>
             </div>
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:364px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit5" cellspacing="0"></table>
+                <table id="limit-5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:58px">涨停时间</th>
+                            <th id="status" style="width:28px">状态</th>
+                            <th id="theme" style="width:98px">涨停原因</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit5"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="limit55" cellspacing="0"></table>
+                <table id="limit-55" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:68px">状态</th>
+                            <th id="status" style="width:180px">板块</th>
+                            <th id="theme" style="width:40px">涨幅</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit55"></tbody>
+                </table>
             </div>
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
-                <table id="history" cellspacing="0"></table>
+                <table id="history-55" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:82px">状态</th>
+                            <th id="status" style="width:180x">板块</th>
+                            <th id="theme" style="width:40px">昨日</th>
+                            <th id="theme" style="width:40px">实时</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history55"></tbody>
+                </table>
             </div>
 
         </div>
@@ -105,21 +230,53 @@
         </div>
         <div class="table-one" style="float:left;width:364px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
-                <table id="broke" cellspacing="0"></table>
+                <table id="broke-now" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:40px">涨幅</th>
+                            <th id="status" style="width:180px">板块</th>
+                            <th id="theme" style="width:60px">成交额</th>
+                        </tr>
+                    </thead>
+                    <tbody id="broke"></tbody>
+                </table>
             </div>
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:384px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
-                <table id="broke-history" cellspacing="0"></table>
+                <table id="broke-history-id" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:40px">涨幅</th>
+                            <th id="status" style="width:180px">板块</th>
+                            <th id="theme" style="width:60px">成交额</th>
+                            <th id="theme" style="width:40px">实时</th>
+                        </tr>
+                    </thead>
+                    <tbody id="broke-history"></tbody>
+                </table>
             </div>
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:384px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
-                <table id="history-all-four" cellspacing="0"></table>
+                <table id="history-all-four-id" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th id="name" style="width:68px">股票名称</th>
+                            <th id="time" style="width:82px">状态</th>
+                            <th id="status" style="width:180x">板块</th>
+                            <th id="theme" style="width:40px">昨日</th>
+                            <th id="theme" style="width:40px">实时</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-all-four"></tbody>
+                </table>
             </div>
 
         </div>
@@ -127,6 +284,27 @@
 </body>
 
 
+<!-- 表格排序 -->
+<script type="text/javascript">
+    $(function () {
+        $("#limit-1").tablesorter();
+        $("#limit-2").tablesorter();
+        $("#limit-3").tablesorter();
+        $("#limit-4").tablesorter();
+        $("#limit-5").tablesorter();
+        $("#limit-11").tablesorter();
+        $("#limit-22").tablesorter();
+        $("#limit-33").tablesorter();
+        $("#limit-44").tablesorter();
+        $("#limit-55").tablesorter();
+        $("#history-33").tablesorter();
+        $("#history-44").tablesorter();
+        $("#history-55").tablesorter();
+        $("#broke-now").tablesorter();
+        $("#broke-history-id").tablesorter();
+        $("#history-all-four-id").tablesorter();
+    });
+</script>
 <!-- 回调函数 -->
 <script type="text/javascript">
     function history_all_four(data) {
@@ -147,9 +325,9 @@
             stocks55.push(data[i][0])
         }
         if (stocks55.length > 0) {
-            codes_rise(stocks55, data, 'history', '历史未涨停的四板个股', set_table2_history)
+            codes_rise(stocks55, data, 'history55', '历史未涨停的四板个股', set_table2_history)
         } else {
-            set_table2_history(data, 'history', '历史未涨停的四板个股', null)
+            set_table2_history(data, 'history55', '历史未涨停的四板个股', null)
         }
     }
 
@@ -226,7 +404,7 @@
 
         show_form(data[_indexof])
         _indexof = _indexof - 1
-        fourBoardStocksYesterdayHistory1(data[_indexof], 'history', '历史未涨停的四板个股', history_55);
+        fourBoardStocksYesterdayHistory1(data[_indexof], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(data[_indexof], 'history44', '历史未涨停的三板个股', history_44);
         twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
         limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
@@ -251,7 +429,7 @@
             show_form(data[_indexof])
         }
         _indexof = _indexof - 1
-        fourBoardStocksYesterdayHistory1(data[_indexof], 'history', '历史未涨停的四板个股', history_55);
+        fourBoardStocksYesterdayHistory1(data[_indexof], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(data[_indexof], 'history44', '历史未涨停的三板个股', history_44);
         twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
         limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
@@ -303,7 +481,7 @@
         show_form(dates)
         data = all_data
         _indexof = data.indexOf(dates, 0) - 1
-        _stocks55 = get_limit2_data_history('fourBoardStocksYesterdayHistory', data[_indexof], 'history', '历史未涨停的四板个股', history_55)
+        _stocks55 = get_limit2_data_history('fourBoardStocksYesterdayHistory', data[_indexof], 'history55', '历史未涨停的四板个股', history_55)
         _stocks44 = get_limit2_data_history('threeBoardStocksYesterdayHistory', data[_indexof], 'history44', '历史未涨停的三板个股', history_44)
         _stocks33 = get_limit2_data_history('twoBoardStocksYesterdayHistory', data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
         get_limit2_data_history('limit_broke_history', data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
@@ -391,6 +569,39 @@
                 'PidType': '1',
                 'PhoneOSNew': '1',
                 'Type': '4',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0'
+            },
+            async: true,
+            dataType: 'text',
+            // contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                var data = eval('(' + data + ')')['info'][0];//json格式化数据
+                // console.log(data);
+                set_table1(data, id, caption);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+
+    };
+
+    // 一板涨停排序
+    function get_daily_limit_performance_sort(id, caption) {
+        var m_data = []
+        $.ajax({
+            url: 'https://apphq.longhuvip.com/w1/api/index.php',
+            type: 'POST',
+            data: {
+                'Order': '0',
+                'a': 'DailyLimitPerformance',
+                'st': '100',
+                'apiv': 'w29',
+                'c': 'HomeDingPan',
+                'PidType': '1',
+                'PhoneOSNew': '1',
+                'Type': '5',
                 'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
                 'index': '0'
             },
@@ -1277,8 +1488,10 @@
     };
     //加载页面
     function onload() {
+
         dates = history_date_eastmoney()
-        stocksHistory('2023-02-06')
+        // stocksHistory('2023-02-06')
+
     }
     function next(data) {
         var dates = data;
@@ -1310,7 +1523,7 @@
         fivePlate('limit5', '5板或更高');
         fourBoardStocksYesterday('limit55', '未涨停的昨日四板个股');
 
-        fourBoardStocksYesterdayHistory1(dates[dates.length - 2], 'history', '历史未涨停的四板个股', history_55);
+        fourBoardStocksYesterdayHistory1(dates[dates.length - 2], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(dates[dates.length - 2], 'history44', '历史未涨停的三板个股', history_44);
         twoBoardStocksYesterdayHistory(dates[dates.length - 2], 'history33', '历史未涨停的二板个股', history_33)
         limit_broke_history(dates[dates.length - 2], 'broke-history', '昨日炸板个股', history_broke)
@@ -1318,6 +1531,10 @@
         get_broke()//炸板
         // // console.log(dates[dates.length - 1]);
         // // get_broke_history(dates[dates.length - 1])//炸板
+        // document.getElementById('limit1').addEventListener('click', function (e) {
+        //     e.preventDefault()  // 当theme触发click时，处理业务
+        //     get_daily_limit_performance_sort('limit1', '一板')
+        // }, false);
 
     }
 
@@ -1500,12 +1717,12 @@
     function set_table1(data, id, caption) {
         all_theme = [];
         var m_html = ""
-        var m_th = "<tr class=\"cur\">\
-            <th style=\"width:68px\">股票名称</th>\
-            <th style=\"width:58px\">涨停时间</th>\
-            <th style=\"width:28px\">状态</th>\
-            <th style=\"width:98px\">涨停原因</th>\
-            </tr>"
+        // var m_th = "<tr class=\"cur\">\
+        //     <th style=\"width:68px\">股票名称</th>\
+        //     <th style=\"width:58px\">涨停时间</th>\
+        //     <th style=\"width:28px\">状态</th>\
+        //     <th style=\"width:98px\">涨停原因</th>\
+        //     </tr>"
         // <th>板块</th>\
         // <th>最大封单</th>\
         // <th>封单</th>\
@@ -1550,24 +1767,37 @@
             m_html += "</tr>"
         }
         var tb = document.getElementById(id); //获取表格的dom节点
+        // console.log(id)
+        // m_th = document.getElementById('name').outerHTML
+        // m_th = m_th + document.getElementById('time').outerHTML
+        // m_th = m_th + document.getElementById('status').outerHTML
+        // m_th = m_th + document.getElementById('theme').outerHTML
         var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
         //m_list 为空则清空表格
-        if (m_list.length == 0) {
-            tb.innerHTML = caption + m_th + ''
-        } else
-            tb.innerHTML = caption + m_th + m_html
+        // if (m_list.length == 0) {
+        //     tb.innerHTML = caption + m_th + ''
+        // } else
+        //     tb.innerHTML = caption + m_th + m_html
+        
+        tb.innerHTML = m_html
+        $("#limit-1").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-2").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-3").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-4").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-5").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
     }
 
 
     function set_table2(data, id, caption) {
         all_theme = [];
         var m_html = ""
-        var m_th = "<tr class=\"cur\">\
-            <th style=\"width:68px\">股票名称</th>\
-            <th style=\"width:68px\">状态</th>\
-            <th style=\"width:180px\">板块</th>\
-            <th style=\"width:40px\">涨幅%</th>\
-            </tr>"
+        var m_th = ""
+        // var m_th = "<tr class=\"cur\">\
+        //     <th style=\"width:68px\">股票名称</th>\
+        //     <th style=\"width:68px\">状态</th>\
+        //     <th style=\"width:180px\">板块</th>\
+        //     <th style=\"width:40px\">涨幅%</th>\
+        //     </tr>"
         // <th>成交额</th>\
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
@@ -1599,24 +1829,32 @@
             m_html += "</tr>"
         }
         var tb = document.getElementById(id); //获取表格的dom节点
-        var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        // var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        var caption = ""
         //m_list 为空则清空表格
         if (m_list.length == 0) {
             tb.innerHTML = caption + m_th + ''
         } else
             tb.innerHTML = caption + m_th + m_html
+
+        $("#limit-11").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-22").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-33").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-44").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#limit-55").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
     }
 
     function set_table2_history(data, id, caption, limit) {
         all_theme = [];
         var m_html = ""
-        var m_th = "<tr class=\"cur\">\
-            <th style=\"width:80px\">股票名称</th>\
-            <th style=\"width:82px\">状态</th>\
-            <th style=\"width:180px\">板块</th>\
-            <th style=\"width:40px\" >昨日%</th>\
-            <th style=\"width:40px\">实时%</th>\
-            </tr>"
+        var m_th =""
+        // var m_th = "<tr class=\"cur\">\
+        //     <th style=\"width:80px\">股票名称</th>\
+        //     <th style=\"width:82px\">状态</th>\
+        //     <th style=\"width:180px\">板块</th>\
+        //     <th style=\"width:40px\" >昨日%</th>\
+        //     <th style=\"width:40px\">实时%</th>\
+        //     </tr>"
         // <th>成交额</th>\
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
@@ -1647,23 +1885,24 @@
             m_html += "</tr>"
         }
         var tb = document.getElementById(id); //获取表格的dom节点
-        var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        // var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        var caption = ""
         //m_list 为空则清空表格
         if (m_list.length == 0) {
             tb.innerHTML = caption + m_th + ''
         } else
             tb.innerHTML = caption + m_th + m_html
+
+        $("#history-33").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#history-44").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#history-55").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题    
+        $("#history-all-four-id").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题    
     }
     // 炸板表格
     function set_table_broke(data) {
         all_theme = [];
         var m_html = ""
-        var m_th = "<tr class=\"cur\">\
-            <th>股票名称</th>\
-            <th>涨幅</th>\
-            <th>板块</th>\
-            <th>成交额</th>\
-            </tr>"
+        var m_th =""
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
             if (i_row % 2 == 0) {
@@ -1686,21 +1925,16 @@
             m_html += "</tr>"
         }
         var tb = document.getElementById("broke"); //获取表格的dom节点
-        var caption = "<caption align=\"top\">炸板-" + m_list.length + "</caption>"
-        tb.innerHTML = caption + m_th + m_html
+        // var caption = "<caption align=\"top\">炸板-" + m_list.length + "</caption>"
+        tb.innerHTML = m_th + m_html
+        $("#broke-now").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
     }
 
     // 历史炸板表格
     function set_table_broke_history(data, id, caption, limit) {
         all_theme = [];
         var m_html = ""
-        var m_th = "<tr class=\"cur\">\
-            <th style=\"width:80px\">股票名称</th>\
-            <th style=\"width:72px\">涨幅</th>\
-            <th style=\"width:180px\">板块</th>\
-            <th style=\"width:60px\" >成交额</th>\
-            <th style=\"width:40px\">实时%</th>\
-            </tr>"
+        var m_th = ""
         // <th>成交额</th>\
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
@@ -1733,12 +1967,14 @@
             m_html += "</tr>"
         }
         var tb = document.getElementById(id); //获取表格的dom节点
-        var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        // var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
         //m_list 为空则清空表格
         if (m_list.length == 0) {
-            tb.innerHTML = caption + m_th + ''
+            tb.innerHTML = m_th + ''
         } else
-            tb.innerHTML = caption + m_th + m_html
+            tb.innerHTML = m_th + m_html
+
+        $("#broke-history-id").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
     }
 
 </script>
