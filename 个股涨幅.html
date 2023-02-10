@@ -7,14 +7,11 @@
 </head>
 
 <script type="text/javascript" src="./js/kaipanla.js"></script>
-<!-- <script type="text/javascript" src="./js/update.js"></script> -->
 <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
-<!-- <script src="./js/update.js"></script> -->
+<script type="text/javascript" src="./js/jquery.tablesorter.min.js"></script>
 <script src="./js/show_message.js"></script>
 
 <script src="./js/kaipanla.js"></script>
-
-<!-- <script src="./kpl/jquery.js"></script> -->
 <script src="./kpl/com.js"></script>
 <!--分时-->
 <script src="./kpl/floatMChart.js"></script>
@@ -64,6 +61,14 @@
     </div>
 
 </body>
+
+<!-- 表格排序 -->
+<script type="text/javascript">
+    $(function () {
+        $("#table-list-sort").tablesorter();
+    });
+</script>
+
 <script type="text/javascript">
     //当 DOM（文档对象模型） 已经加载，并且页面（包括图像）已经完全呈现时，会发生 ready 事件。
     $(document).ready(function () {
@@ -144,7 +149,7 @@
         } else
             tb.innerHTML = m_th + m_html
 
-        $("#broke-history-id").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
+        $("#table-list-sort").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
     }
 </script>
 
