@@ -370,11 +370,21 @@
             stocks.push(data[i][0])
         }
         // if (stocks33.length > 0) {
+        codes_rise(stocks, data, id, caption, set_table_broke)
+        // get_rise_data_update_broke_history(stocks, data, 'broke-history', '昨日炸板个股')
+        // }
+    }
+    // 历史昨日炸板
+    function history_last_broke(data, id, caption) {
+        var stocks = new Array()
+        for (i = 0; i < data.length; i++) {
+            stocks.push(data[i][0])
+        }
+        // if (stocks33.length > 0) {
         codes_rise(stocks, data, id, caption, set_table_broke_history)
         // get_rise_data_update_broke_history(stocks, data, 'broke-history', '昨日炸板个股')
         // }
     }
-
     // 炸板
     function now_broke(data) {
         var stocks = new Array()
@@ -411,7 +421,7 @@
         fourBoardStocksYesterdayHistory1(data[_indexof], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(data[_indexof], 'history44', '历史未涨停的三板个股', history_44);
         twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
-        limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
+        limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_last_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
         limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
     }
@@ -436,7 +446,7 @@
         fourBoardStocksYesterdayHistory1(data[_indexof], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(data[_indexof], 'history44', '历史未涨停的三板个股', history_44);
         twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
-        limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
+        limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_last_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
         limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
 
@@ -1530,7 +1540,7 @@
         fourBoardStocksYesterdayHistory1(dates[dates.length - 2], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(dates[dates.length - 2], 'history44', '历史未涨停的三板个股', history_44);
         twoBoardStocksYesterdayHistory(dates[dates.length - 2], 'history33', '历史未涨停的二板个股', history_33)
-        limit_broke_history(dates[dates.length - 2], 'broke-history', '昨日炸板个股', history_broke)
+        limit_broke_history(dates[dates.length - 2], 'broke-history', '昨日炸板个股', history_last_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
         get_broke()//炸板
         // // console.log(dates[dates.length - 1]);
@@ -1796,13 +1806,6 @@
         all_theme = [];
         var m_html = ""
         var m_th = ""
-        // var m_th = "<tr class=\"cur\">\
-        //     <th style=\"width:68px\">股票名称</th>\
-        //     <th style=\"width:68px\">状态</th>\
-        //     <th style=\"width:180px\">板块</th>\
-        //     <th style=\"width:40px\">涨幅%</th>\
-        //     </tr>"
-        // <th>成交额</th>\
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
             if (i_row % 2 == 0) {
@@ -1852,14 +1855,6 @@
         all_theme = [];
         var m_html = ""
         var m_th =""
-        // var m_th = "<tr class=\"cur\">\
-        //     <th style=\"width:80px\">股票名称</th>\
-        //     <th style=\"width:82px\">状态</th>\
-        //     <th style=\"width:180px\">板块</th>\
-        //     <th style=\"width:40px\" >昨日%</th>\
-        //     <th style=\"width:40px\">实时%</th>\
-        //     </tr>"
-        // <th>成交额</th>\
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
             if (i_row % 2 == 0) {
@@ -1939,7 +1934,7 @@
         all_theme = [];
         var m_html = ""
         var m_th = ""
-        // <th>成交额</th>\
+        
         var m_list = data
         for (var i_row = 0; i_row < m_list.length; i_row++) {
             if (i_row % 2 == 0) {
