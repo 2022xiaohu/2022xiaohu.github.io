@@ -87,8 +87,8 @@
 
         var ID_THREAD = -1;
 
-        function get_date() {
-            //获取当前日期
+         //获取当前日期
+        function getDate() {
             var d = new Date();
             var m_date = d.getFullYear() + "-" + formatZero(String(parseInt(d.getMonth()) + 1)) + "-" + formatZero(d.getDate());
             return m_date;
@@ -129,8 +129,11 @@
 
         function auto_update(Func) {
             Func()
-            // data = get_server_data();
-            if (true) {
+            date = getDate()
+            _date = historyDateEastmoney()
+            _date = _date[_date.length-1]
+            
+            if (date == _date) {
                 ID_THREAD = setInterval(is_running, 1000 * 3, Func); //指定3秒刷新一次
             } else {
                 if (ID_THREAD != -1) {
@@ -139,7 +142,7 @@
             }
             return ID_THREAD
         }
-        // 获取现在涨停的股票池
+        // 获取交易日日期
         function get_server_data() {
             var m_data = []
             $.ajax({
@@ -157,83 +160,7 @@
             })
             return m_data;
         };
-        /*
-        获取大盘分时数据
-        */
-        function getTrend(market, code) {
-            var m_data = []
-            $.ajax({
-                url: '/tline',
-                data: {
-                    market: market,
-                    code: code
-                },
-                type: 'POST',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    m_data = data;
-                },
-                error: function (msg) {
-                    console.log(msg);
-                }
-            })
-            return m_data;
-        };
-
-        /*
-        获取个股分时数据
-        */
-        function getStockTrend(code) {
-            var m_data = []
-            $.ajax({
-                url: '/stock_trend',
-                data: {
-                    date: code
-                },
-                type: 'POST',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    m_data = data;
-                },
-                error: function (msg) {
-                    console.log(msg);
-                }
-            })
-            return m_data;
-        };
-
-        /*
-        获取K线数据
-        */
-        function getKline(code) {
-            var m_data = []
-            $.ajax({
-                url: '/kline',
-                data: {
-                    code: code,
-                    market: 0
-                },
-                type: 'POST',
-                async: false,
-                dataType: 'json',
-                success: function (data) {
-                    // var x_data = data['x'];
-                    // var y_data = data['y'];
-                    // var vol_data = data['vol'];
-                    // for (var i = 0; i < x_data.length; i++) {
-                    //     m_data.push([x_data[i], y_data[i][0], y_data[i][1], y_data[i][2], y_data[i][3], vol_data[i]])
-                    // }
-                    m_data = data['data'];
-                },
-                error: function (msg) {
-                    console.log(msg);
-                }
-            })
-            return m_data;
-        };
-
+        
         function format_money(money) {
             //金钱转换
             if (money > 0) {
@@ -268,25 +195,27 @@
             }
         }
 
-        // 获取股票涨幅数据
-        function get_rise_data(codes) {
-            var m_data = []
-            $.ajax({
-                url: '/codes_rise',
-                data: JSON.stringify({
-                    data: codes
-                }),
-                type: 'POST',
-                async: true, //异步加载
-                dataType: 'json',
-                contentType: 'application/json; charset=UTF-8',
-                success: function(data) {
-                    m_data = data;
-                    console.log(data);
-                },
-                error: function(msg) {
-                    console.log(msg);
-                }
-            })
-            return m_data;
-        };        
+       // 获取最近几个交易日日期
+       function historyDateEastmoney() {
+        var m_data = []
+        $.ajax({
+            url: 'https://push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery351020143393668275844_1674273725401&secid=0.000001&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1&fields2=f51&klt=101&fqt=1&end=20500101&lmt=1000000&_=1674273725455 ',
+            type: 'GET',
+            async: false,//同步
+            dataType: 'text',
+            // contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                // var data = eval('(' + data + ')')['klines'];
+                // console.log(data);
+                var regex3 = /\{\"code\".*\]\}/  // {} 花括号，大括号
+                data = data.match(regex3)[0]
+                data = JSON.parse(data)["klines"]//JSON格式化
+                // console.log(data);
+                m_data = data
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+        return  m_data
+    };  
