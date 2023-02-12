@@ -288,7 +288,7 @@ table tr td.bs {
 .table-one tr td {
     height: 1px;
     line-height: 16px;
-    /* white-space: nowrap; */
+    white-space: nowrap;
     /* 规定段落中的文本不进行换行 */
 }
 
