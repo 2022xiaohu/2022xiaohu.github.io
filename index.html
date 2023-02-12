@@ -29,7 +29,7 @@
 <script src="./kpl/fChart.js"></script>
 
 <body>
-    <div class="table-one" style="float:right;width:220px;">
+    <div id = "table" class="table-one" style="float:right;width:220px;">
         <div style="position:fixed;">
             <div style="float:left;">
                 <label for="meeting">选择日期：</label>
@@ -118,7 +118,7 @@
                         <tr>
                             <th  style="width:68px">股票名称</th>
                             <th  style="width:40px">涨幅</th>
-                            <th  style="width:180px">板块</th>
+                            <th  style="width:160px">板块</th>
                             <th  style="width:60px">成交额</th>
                             <th  style="width:40px">实时</th>
                         </tr>
@@ -646,7 +646,8 @@
     };
     //加载页面
     function onload() {
-
+        let tb = document.getElementById('table'); //设置字体大小
+        tb.style.fontSize = 1+'px'
         dates = history_date_eastmoney()
         // stocksHistory('2023-02-06')
 
