@@ -54,46 +54,76 @@
     </div>
     <!-- <div class="table-one" style="float:left;width:100%;height:20px;"></div> -->
     <div class="table-one" style="float:left;width:100%;height:100%;">
-        <div class="table-one" style="float:left;width:250px;height:100%;overflow:auto;">
-            <table id="limit-1" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th id="name" style="width:68px">股票名称</th>
-                        <th id="time" style="width:58px">涨停时间</th>
-                        <th id="status" style="width:28px">状态</th>
-                        <th id="theme" style="width:98px">涨停原因</th>
-                    </tr>
-                </thead>
-                <tbody id="limit1"></tbody>
-            </table>
+        <div class="table-one" style="float:left;width:304px;height:100%;overflow:auto;">
+            <div class="table-one" style="float:left;height:50%;overflow:auto;">
+                <table id="limit-1" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">涨停时间</th>
+                            <th  style="width:28px">状态</th>
+                            <th  style="width:98px">涨停原因</th>
+                            <th  style="width:60px">成交额</th>
+                        </tr>
+                    </thead>
+                    <tbody id="limit1"></tbody>
+                </table>
+            </div>
+            <div class="table-one" style="float:left;height:50%;overflow:auto;">
+                <table id="broke-now" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:40px">涨幅</th>
+                            <th  style="width:130px">板块</th>
+                            <th  style="width:60px">成交额</th>
+                        </tr>
+                    </thead>
+                    <tbody id="broke"></tbody>
+                </table>
+            </div>
         </div>
-        <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
-        </div>
+        <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;"></div>
         <div class="table-one" style="float:left;width:364px;height:100%;">
             <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
                 <table id="limit-2" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:58px">涨停时间</th>
-                            <th id="status" style="width:28px">状态</th>
-                            <th id="theme" style="width:98px">涨停原因</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">涨停时间</th>
+                            <th  style="width:28px">状态</th>
+                            <th  style="width:98px">涨停原因</th>
+                            <th  style="width:60px">成交额</th>
                         </tr>
                     </thead>
                     <tbody id="limit2"></tbody>
                 </table>
             </div>
-            <div class="table-one" style="float:left;width:100%;height:70%;overflow:auto;">
+            <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
                 <table id="limit-22" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:68px">状态</th>
-                            <th id="status" style="width:180px">板块</th>
-                            <th id="theme" style="width:40px">涨幅</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:40px">涨幅</th>
                         </tr>
                     </thead>
                     <tbody id="limit22"></tbody>
+                </table>
+            </div>
+            <div class="table-one" style="float:left;width:100%;height:30%;overflow:auto;">
+                <table id="broke-history-id" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:40px">涨幅</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:60px">成交额</th>
+                            <th  style="width:40px">实时</th>
+                        </tr>
+                    </thead>
+                    <tbody id="broke-history"></tbody>
                 </table>
             </div>
         </div>
@@ -104,10 +134,11 @@
                 <table id="limit-3" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:58px">涨停时间</th>
-                            <th id="status" style="width:28px">状态</th>
-                            <th id="theme" style="width:98px">涨停原因</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">涨停时间</th>
+                            <th  style="width:28px">状态</th>
+                            <th  style="width:98px">涨停原因</th>
+                            <th  style="width:60px">成交额</th>
                         </tr>
                     </thead>
                     <tbody id="limit3"></tbody>
@@ -117,10 +148,10 @@
                 <table id="limit-33" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:68px">状态</th>
-                            <th id="status" style="width:180px">板块</th>
-                            <th id="theme" style="width:40px">涨幅</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:40px">涨幅</th>
                         </tr>
                     </thead>
                     <tbody id="limit33"></tbody>
@@ -130,11 +161,11 @@
                 <table id="history-33" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:82px">状态</th>
-                            <th id="status" style="width:180x">板块</th>
-                            <th id="theme" style="width:40px">昨日</th>
-                            <th id="theme" style="width:40px">实时</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180x">板块</th>
+                            <th  style="width:40px">昨日</th>
+                            <th  style="width:40px">实时</th>
                         </tr>
                     </thead>
                     <tbody id="history33"></tbody>
@@ -148,10 +179,11 @@
                 <table id="limit-4" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:58px">涨停时间</th>
-                            <th id="status" style="width:28px">状态</th>
-                            <th id="theme" style="width:98px">涨停原因</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">涨停时间</th>
+                            <th  style="width:28px">状态</th>
+                            <th  style="width:98px">涨停原因</th>
+                            <th  style="width:60px">成交额</th>
                         </tr>
                     </thead>
                     <tbody id="limit4"></tbody>
@@ -161,10 +193,10 @@
                 <table id="limit-44" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:68px">状态</th>
-                            <th id="status" style="width:180px">板块</th>
-                            <th id="theme" style="width:40px">涨幅</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:40px">涨幅</th>
                         </tr>
                     </thead>
                     <tbody id="limit44"></tbody>
@@ -174,11 +206,11 @@
                 <table id="history-44" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:82px">状态</th>
-                            <th id="status" style="width:180x">板块</th>
-                            <th id="theme" style="width:40px">昨日</th>
-                            <th id="theme" style="width:40px">实时</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180x">板块</th>
+                            <th  style="width:40px">昨日</th>
+                            <th  style="width:40px">实时</th>
                         </tr>
                     </thead>
                     <tbody id="history44"></tbody>
@@ -192,10 +224,11 @@
                 <table id="limit-5" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:58px">涨停时间</th>
-                            <th id="status" style="width:28px">状态</th>
-                            <th id="theme" style="width:98px">涨停原因</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">涨停时间</th>
+                            <th  style="width:28px">状态</th>
+                            <th  style="width:98px">涨停原因</th>
+                            <th  style="width:60px">成交额</th>
                         </tr>
                     </thead>
                     <tbody id="limit5"></tbody>
@@ -205,10 +238,10 @@
                 <table id="limit-55" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:68px">状态</th>
-                            <th id="status" style="width:180px">板块</th>
-                            <th id="theme" style="width:40px">涨幅</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:40px">涨幅</th>
                         </tr>
                     </thead>
                     <tbody id="limit55"></tbody>
@@ -218,11 +251,11 @@
                 <table id="history-55" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:82px">状态</th>
-                            <th id="status" style="width:180x">板块</th>
-                            <th id="theme" style="width:40px">昨日</th>
-                            <th id="theme" style="width:40px">实时</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:58px">状态</th>
+                            <th  style="width:180x">板块</th>
+                            <th  style="width:40px">昨日</th>
+                            <th  style="width:40px">实时</th>
                         </tr>
                     </thead>
                     <tbody id="history55"></tbody>
@@ -232,39 +265,39 @@
         </div>
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
-        <div class="table-one" style="float:left;width:364px;height:100%;overflow:auto;">
+        <!-- <div class="table-one" style="float:left;width:364px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
                 <table id="broke-now" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:40px">涨幅</th>
-                            <th id="status" style="width:180px">板块</th>
-                            <th id="theme" style="width:60px">成交额</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:40px">涨幅</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:60px">成交额</th>
                         </tr>
                     </thead>
                     <tbody id="broke"></tbody>
                 </table>
             </div>
-        </div>
-        <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
-        </div>
-        <div class="table-one" style="float:left;width:384px;height:100%;overflow:auto;">
+        </div> -->
+        <!-- <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
+        </div> -->
+        <!-- <div class="table-one" style="float:left;width:384px;height:100%;overflow:auto;">
             <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
                 <table id="broke-history-id" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:40px">涨幅</th>
-                            <th id="status" style="width:180px">板块</th>
-                            <th id="theme" style="width:60px">成交额</th>
-                            <th id="theme" style="width:40px">实时</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:40px">涨幅</th>
+                            <th  style="width:180px">板块</th>
+                            <th  style="width:60px">成交额</th>
+                            <th  style="width:40px">实时</th>
                         </tr>
                     </thead>
                     <tbody id="broke-history"></tbody>
                 </table>
             </div>
-        </div>
+        </div> -->
         <div class="table-one" style="float:left;width:20px;height:100%;overflow:auto;">
         </div>
         <div class="table-one" style="float:left;width:384px;height:100%;overflow:auto;">
@@ -272,11 +305,11 @@
                 <table id="history-all-four-id" cellspacing="0">
                     <thead>
                         <tr>
-                            <th id="name" style="width:68px">股票名称</th>
-                            <th id="time" style="width:82px">状态</th>
-                            <th id="status" style="width:180x">板块</th>
-                            <th id="theme" style="width:40px">昨日</th>
-                            <th id="theme" style="width:40px">实时</th>
+                            <th  style="width:68px">股票名称</th>
+                            <th  style="width:82px">状态</th>
+                            <th  style="width:180x">板块</th>
+                            <th  style="width:40px">昨日</th>
+                            <th  style="width:40px">实时</th>
                         </tr>
                     </thead>
                     <tbody id="history-all-four"></tbody>
@@ -681,6 +714,7 @@
             m_html += "<td>" + format_date(new Date(parseInt(m_list[i_row][4]) * 1000)) + "</td>"
             m_html += "<td>" + m_list[i_row][15] + "</td>"
             m_html += "<td>" + m_list[i_row][5] + "</td>"
+            m_html += "<td>" + format_money(m_list[i_row][11]) + "</td>"
             m_html += "</tr>"
         }
         var tb = document.getElementById(id); //获取表格的dom节点
