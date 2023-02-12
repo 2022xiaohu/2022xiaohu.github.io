@@ -227,7 +227,9 @@
 }
 
 
-/*ͨ�ñ���*/
+table {
+    white-space: nowrap;
+}
 
 table tr td {
     text-align: center;
