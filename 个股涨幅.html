@@ -74,9 +74,12 @@
         if (-1 == _indexof) {
             return
         }
+        if (data.length == _indexof + 1) {
+            newStockRanking(data[_indexof], setTable)
+        }
         document.getElementById("meeting").value = data[_indexof] //设置日期
-        stocksHistory(data[_indexof], setTable)
-        
+        hisStockRanking(data[_indexof], setTable)
+
     }
 
     // 右箭头回调函数
@@ -91,12 +94,15 @@
         }
         document.getElementById("meeting").value = data[_indexof] //设置日期
         //判断是否是最后一个交易日
-        if (data.length <_indexof + 1) {
-           return
-        } else {
-            stocksHistory(data[_indexof], setTable)
+        if (data.length < _indexof + 1) {
+            return
         }
-        
+        if (data.length == _indexof + 1) {
+            newStockRanking(data[_indexof], setTable)
+        } else {
+            hisStockRanking(data[_indexof], setTable)
+        }
+
 
     }
 
@@ -124,6 +130,18 @@
     function upperCase(x) {
         clearInterval(ID_THREAD)
         var dates = document.getElementById(x).value //获取选择的日期
+        data = date_history//获取历史日期
+        _indexof = data.indexOf(dates, 0) //匹配索引
+        //判断是否是最后一个交易日
+        if (data.length < _indexof + 1) {
+            return
+        }
+        if (data.length == _indexof + 1) {
+            newStockRanking(data[_indexof], setTable)
+        } else {
+            hisStockRanking(data[_indexof], setTable)
+        }
+
     }
 </script>
 
@@ -144,10 +162,10 @@
 
 
     function onload() {
-        date_history =_date = historyDateEastmoney()
-        document.getElementById("meeting").value = date_history[date_history.length-1] //设置日期
+        date_history = _date = historyDateEastmoney()
+        document.getElementById("meeting").value = date_history[date_history.length - 1] //设置日期
         _date = _date[_date.length - 1]
-        stocksHistory(_date, setTable)
+        newStockRanking(_date, setTable)
         ID_THREAD = self.setInterval("run()", 3000)
         // auto_update(run)
     }
