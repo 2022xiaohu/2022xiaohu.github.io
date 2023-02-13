@@ -3,7 +3,7 @@
 
 <head>
     <!-- <meta charset="utf-8"> -->
-    <title>涨停表现</title>
+    <title>个股涨幅</title>
 </head>
 
 <script type="text/javascript" src="./js/kaipanla.js"></script>
@@ -62,6 +62,71 @@
 
 </body>
 
+<!-- 日期事件 -->
+<script type="text/javascript">
+    // 左箭头回调函数
+    function οnclick_to_left() {
+        clearInterval(ID_THREAD)
+        dates = document.getElementById("meeting").value
+        console.log(dates);
+        data = date_history//获取历史日期
+        _indexof = data.indexOf(dates, 0) - 1 //匹配索引
+        if (-1 == _indexof) {
+            return
+        }
+        document.getElementById("meeting").value = data[_indexof] //设置日期
+        stocksHistory(data[_indexof], setTable)
+        
+    }
+
+    // 右箭头回调函数
+    function οnclick_to_right() {
+        clearInterval(ID_THREAD)
+        dates = document.getElementById("meeting").value
+        console.log(dates);
+        data = date_history//获取历史日期
+        _indexof = data.indexOf(dates, 0) + 1 //匹配索引
+        if (data.length == _indexof) {
+            return
+        }
+        document.getElementById("meeting").value = data[_indexof] //设置日期
+        //判断是否是最后一个交易日
+        if (data.length <_indexof + 1) {
+           return
+        } else {
+            stocksHistory(data[_indexof], setTable)
+        }
+        
+
+    }
+
+    // 获取历史日期
+    function get_history_date() {
+        var m_data = []
+        $.ajax({
+            url: '/get_history_date',
+            // data: {data: codes},
+            type: 'GET',
+            async: false, //异步加载
+            dataType: 'json',
+            // contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                m_data = data;
+                console.log(data);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+        return m_data;
+    };
+
+    function upperCase(x) {
+        clearInterval(ID_THREAD)
+        var dates = document.getElementById(x).value //获取选择的日期
+    }
+</script>
+
 <!-- 表格排序 -->
 <script type="text/javascript">
     $(function () {
@@ -70,6 +135,8 @@
 </script>
 
 <script type="text/javascript">
+    var ID_THREAD = -1
+    var date_history = []
     //当 DOM（文档对象模型） 已经加载，并且页面（包括图像）已经完全呈现时，会发生 ready 事件。
     $(document).ready(function () {
         onload();
@@ -77,10 +144,11 @@
 
 
     function onload() {
-        _date = historyDateEastmoney()
+        date_history =_date = historyDateEastmoney()
+        document.getElementById("meeting").value = date_history[date_history.length-1] //设置日期
         _date = _date[_date.length - 1]
         stocksHistory(_date, setTable)
-        var int = self.setInterval("run()", 3000)
+        ID_THREAD = self.setInterval("run()", 3000)
         // auto_update(run)
     }
 
