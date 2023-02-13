@@ -429,6 +429,7 @@
 <script type="text/javascript">
     // 左箭头回调函数
     function οnclick_to_left() {
+        clearInterval(ID_THREAD)
         dates = document.getElementById("meeting").value
         console.log(dates);
         data = all_data//获取历史日期
@@ -450,6 +451,7 @@
 
     // 右箭头回调函数
     function οnclick_to_right() {
+        clearInterval(ID_THREAD)
         dates = document.getElementById("meeting").value
         console.log(dates);
         data = all_data//获取历史日期
