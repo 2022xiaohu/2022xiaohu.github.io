@@ -77,7 +77,9 @@
 
 
     function onload() {
-        stocksHistory('2023-02-10', setTable)
+        _date = historyDateEastmoney()
+        _date = _date[_date.length - 1]
+        stocksHistory(_date, setTable)
         var int = self.setInterval("run()", 3000)
         // auto_update(run)
     }
@@ -89,36 +91,63 @@
             var m_date = d.getHours() + "-" + d.getMinutes() + "-" + d.getSeconds();
             var date = d.getHours() * 60 * 60 + d.getMinutes() * 60 + d.getSeconds()
             // 判断时间是否在开盘时间段
-            if (date >= (9 * 60 * 60 + 15 * 60) && date <= (11 * 60 * 60 + 30 * 60) || date >= (13 * 60 * 60)&&(15 * 60 * 60) >= date ) {
+            if (date >= (9 * 60 * 60 + 15 * 60) && date <= (11 * 60 * 60 + 30 * 60) || date >= (13 * 60 * 60) && (15 * 60 * 60) >= date) {
                 return true;
             } else {
                 return false;
             }
         }
-        console.log(new Date().toLocaleString()+' runing...')
-        if(get_time()){
-            stocksHistory('2023-02-10', setTable)
+        console.log(new Date().toLocaleString() + ' runing...')
+        if (get_time()) {
+            _date = historyDateEastmoney()
+            _date = _date[_date.length - 1]
+            stocksHistory(_date, setTable)
         }
-        
+
     }
 
     function formatMoney(money) {
-            //金钱转换
-            if (money > 0) {
-                if (money / 10000 > 10000) {
-                    return (money / 100000000).toFixed(2) + "亿"
-                } else if (money / 10000 > 1) {
-                    return (money / 10000).toFixed(0) + "万"
-                }
-            } else {
-                money = Math.abs(money);
-                if (money / 10000 > 10000) {
-                    return "-" + (money / 100000000).toFixed(2) + "亿"
-                } else if (money / 10000 > 1) {
-                    return "-" + (money / 10000).toFixed(0) + "万"
-                }
+        //金钱转换
+        if (money > 0) {
+            if (money / 10000 > 10000) {
+                return (money / 100000000).toFixed(2) + "亿"
+            } else if (money / 10000 > 1) {
+                return (money / 10000).toFixed(0) + "万"
+            }
+        } else {
+            money = Math.abs(money);
+            if (money / 10000 > 10000) {
+                return "-" + (money / 100000000).toFixed(2) + "亿"
+            } else if (money / 10000 > 1) {
+                return "-" + (money / 10000).toFixed(0) + "万"
             }
         }
+    }
+
+    // 获取最近几个交易日日期
+    function historyDateEastmoney() {
+        var m_data = []
+        $.ajax({
+            url: 'https://push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery351020143393668275844_1674273725401&secid=0.000001&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1&fields2=f51&klt=101&fqt=1&end=20500101&lmt=1000000&_=1674273725455 ',
+            type: 'GET',
+            async: false,//同步
+            dataType: 'text',
+            // contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                // var data = eval('(' + data + ')')['klines'];
+                // console.log(data);
+                var regex3 = /\{\"code\".*\]\}/  // {} 花括号，大括号
+                data = data.match(regex3)[0]
+                data = JSON.parse(data)["klines"]//JSON格式化
+                // console.log(data);
+                m_data = data
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+        return m_data
+    };
 
     // 设置表格
     function setTable(data) {
@@ -141,9 +170,9 @@
             // 设置涨幅颜色
             if (m_list[i_row][6] > 0) {
                 //判断是否涨停
-                if(m_list[i_row][23].indexOf('板')!=-1){
+                if (m_list[i_row][23].indexOf('板') != -1) {
                     m_html += "<td class=\"red rbnews\">" + m_list[i_row][6] + "</td>"
-                }else{
+                } else {
                     m_html += "<td class=\"red\">" + m_list[i_row][6] + "</td>"
                 }
             } else {
