@@ -24,18 +24,38 @@
 <script src="./kpl/fChart.js"></script>
 
 <body>
-    <div class="m-body">
-        <div class="m-middle">
-            <div>
-                <div class="over-chart si" data-name="房地产" data-sid="801007" data-ct="big">
-                    <img src="https://www.kaipanla.com/pc/img/mark_001.png" width="16" height="16">
-                    <span class="n">房地产</span>
-                    <span class="c">801007</span>
-                    <span class="green">-0.55%</span>
-                </div>
-            </div>
-
 
 </body>
+
+<script>
+    $(document).ready(function () {
+    urlToBlob();
+});
+</script>
+
+<script>
+    //url转blob
+    function urlToBlob() {
+      let file_url =
+        'http://obdataplatform-test.oss-cn-shenzhen.aliyuncs.com/2020_07_10/391f56b9-f4bc-408b-868b-31ea0f8b1b47.hex'
+      let xhr = new XMLHttpRequest();
+      xhr.open("get", file_url, true);
+      xhr.responseType = "blob";
+      xhr.onload = function () {
+        if (this.status == 200) {
+          // if (callback) {
+          // callback();
+          console.log(this.response)
+          const reader = new FileReader()
+          reader.onload = function () {
+            console.log('reader.result', reader.result)
+          }
+          reader.readAsText(this.response);
+        }
+      };
+      xhr.send();
+    }
+    urlToBlob()
+  </script>
 
 </html>
