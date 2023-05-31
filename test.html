@@ -10,7 +10,7 @@
 <link type="text/css" rel="stylesheet" href="./kpl/fChart.css">
 <link type="text/css" rel="stylesheet" href="./kpl/mpage.css">
 
-<script src="./js/update.js"></script>
+<!-- <script src="./js/update.js"></script> -->
 <script src="./js/show_message.js"></script>
 
 <script src="./js/kaipanla.js"></script>
@@ -36,7 +36,13 @@
         var htmlobj = $.ajax({ url: url, async: false });
         console.log(htmlobj.responseText);
         codes = setTableCvs(htmlobj.responseText);
-        codesRise(codes, htmlobj.responseText, setTableInternet)
+
+        var myTarget = setInterval(function(){ update() }, 3000);
+        function update(){
+            codesRise(codes, htmlobj.responseText, setTableInternet)
+            console.log("run......")
+        }
+        
     }
 
 </script>
@@ -105,7 +111,11 @@
                 m_html += "<td>" + m_list[mCount] + "</td>"
             }
             if (statusNumber) {
-                m_html += "<td>" + dataInternet[m_list[mCode]] + "</td>"
+                if(dataInternet[m_list[mCode]]>0){
+                    m_html += "<td class=\"red\">" + dataInternet[m_list[mCode]] + "</td>"
+                }else{
+                    m_html += "<td>" + dataInternet[m_list[mCode]] + "</td>"
+                }
                 statusNumber = false
             }
             m_html += "</tr>"
@@ -149,7 +159,7 @@ var groupArray = group(Array, 6);
         let stock = '';
         // console.log('stocks='+stocks);
         //获取股票代码
-        var groupArray = group(stocks, 20);
+        var groupArray = group(stocks, 200);
         for(let i = 0; i < groupArray.length; i++){
             eastmoney(groupArray[i])
         }
@@ -170,7 +180,7 @@ var groupArray = group(Array, 6);
             }
 
             $.ajax({
-                url: 'https://push2.eastmoney.com/api/qt/ulist/get?fltt=1&invt=2&cb=jQuery351010838368397660503_1675494557241&fields=f3%2Cf12&secids=' + stock + '&ut=fa5fd1943c7b386f172d6893dbfba10b&pn=1&np=1&pz=20&wbp2u=%7C0%7C0%7C0%7Cweb&_=1675494557502',
+                url: 'https://push2.eastmoney.com/api/qt/ulist/get?fltt=1&invt=2&cb=jQuery351010838368397660503_1675494557241&fields=f3%2Cf12&secids=' + stock + '&ut=fa5fd1943c7b386f172d6893dbfba10b&pn=1&np=1&pz=200&wbp2u=%7C0%7C0%7C0%7Cweb&_=1675494557502',
                 type: 'POST',
                 async: true,
                 dataType: 'text',
