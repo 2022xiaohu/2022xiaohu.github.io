@@ -23,39 +23,71 @@
 <script src="./kpl/floatKChart.js"></script>
 <script src="./kpl/fChart.js"></script>
 
-<body>
+<script src="./js/xlsx.js"></script>
 
+<body>
+    <input type="file" id="file" style="display: none;"/>
+    <button class="btn_color" onclick="importBatch()">批量导入</button>
+    
+    <script type="text/javascript">
+        function importBatch(){
+            document.getElementById('file').click();
+        }
+        
+        // 读取本地excel文件
+        function readWorkbookFromLocalFile(file, callback) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {type: 'binary'});
+                if(callback) callback(workbook);
+            };
+            reader.readAsBinaryString(file);
+        }	
+        
+        
+        function readWorkbook(workbook) {
+                var sheetNames = workbook.SheetNames; // 工作表名称集合
+                var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
+                var excelData = XLSX.utils.sheet_to_json(worksheet);
+                
+                // 输出导入的excel信息
+                console.log(excelData);
+            }
+            
+        // 增加上传文件事件
+            document.getElementById('file').addEventListener('change', function(e) {
+                var files = e.target.files;
+                if (files.length === 0) {
+                    return;
+                }
+                var f = files[0];
+                //此处支持的格式可以自己设置
+                if (!(/\.xlsx$/g.test(f.name))&&!(/\.xls$/g.test(f.name))) {
+                    alert('仅支持读取xls格式或者xlsx格式');
+                    return;
+                }
+                readWorkbookFromLocalFile(f, function(workbook) {
+                    readWorkbook(workbook);
+                });
+            });
+    </script>
 </body>
+
 
 <script>
     $(document).ready(function () {
-    urlToBlob();
+    ajaxUrl();
 });
 </script>
 
 <script>
-    //url转blob
-    function urlToBlob() {
-      let file_url =
-        'http://obdataplatform-test.oss-cn-shenzhen.aliyuncs.com/2020_07_10/391f56b9-f4bc-408b-868b-31ea0f8b1b47.hex'
-      let xhr = new XMLHttpRequest();
-      xhr.open("get", file_url, true);
-      xhr.responseType = "blob";
-      xhr.onload = function () {
-        if (this.status == 200) {
-          // if (callback) {
-          // callback();
-          console.log(this.response)
-          const reader = new FileReader()
-          reader.onload = function () {
-            console.log('reader.result', reader.result)
-          }
-          reader.readAsText(this.response);
-        }
-      };
-      xhr.send();
+    function ajaxUrl() {
+        var url = "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/test.txt";	
+	    var htmlobj= $.ajax({url:url,async:false});
+        console.log(htmlobj.responseText);
     }
-    urlToBlob()
+
   </script>
 
 </html>
