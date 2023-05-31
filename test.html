@@ -23,57 +23,6 @@
 <script src="./kpl/floatKChart.js"></script>
 <script src="./kpl/fChart.js"></script>
 
-<script src="./js/xlsx.js"></script>
-
-<body>
-    <input type="file" id="file" style="display: none;"/>
-    <button class="btn_color" onclick="importBatch()">批量导入</button>
-    
-    <script type="text/javascript">
-        function importBatch(){
-            document.getElementById('file').click();
-        }
-        
-        // 读取本地excel文件
-        function readWorkbookFromLocalFile(file, callback) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var data = e.target.result;
-                var workbook = XLSX.read(data, {type: 'binary'});
-                if(callback) callback(workbook);
-            };
-            reader.readAsBinaryString(file);
-        }	
-        
-        
-        function readWorkbook(workbook) {
-                var sheetNames = workbook.SheetNames; // 工作表名称集合
-                var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
-                var excelData = XLSX.utils.sheet_to_json(worksheet);
-                
-                // 输出导入的excel信息
-                console.log(excelData);
-            }
-            
-        // 增加上传文件事件
-            document.getElementById('file').addEventListener('change', function(e) {
-                var files = e.target.files;
-                if (files.length === 0) {
-                    return;
-                }
-                var f = files[0];
-                //此处支持的格式可以自己设置
-                if (!(/\.xlsx$/g.test(f.name))&&!(/\.xls$/g.test(f.name))) {
-                    alert('仅支持读取xls格式或者xlsx格式');
-                    return;
-                }
-                readWorkbookFromLocalFile(f, function(workbook) {
-                    readWorkbook(workbook);
-                });
-            });
-    </script>
-</body>
-
 
 <script>
     $(document).ready(function () {
@@ -83,11 +32,62 @@
 
 <script>
     function ajaxUrl() {
-        var url = "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/2021-06-02.xls";	
+        var url = "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/2021-06-02.csv";	
 	    var htmlobj= $.ajax({url:url,async:false});
         console.log(htmlobj.responseText);
+        set_table(htmlobj.responseText);
     }
 
   </script>
 
+<script>
+    function set_table(data) {
+        all_theme = [];
+        var m_html = ""
+        const myArray = data.split("\n");
+        var m_list = myArray
+        for (var i_row = 0; i_row < m_list.length; i_row++) {
+            if (i_row % 2 == 0) {
+                m_html += "<tr>"
+            } else
+                m_html += "<tr class=\"cur\">"
+            if (m_list[i_row][16] == 1) {
+                if (m_list[i_row].slice(0, 1) == '3' || m_list[i_row].slice(0, 3) == '688') {
+                    m_html += "<td class=\"red gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                } else {
+                    m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                }
+            } else {
+                if (m_list[i_row].slice(0, 1) == '3' || m_list[i_row].slice(0, 3) == '688') {
+                    m_html += "<td class=\"red td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+                } else
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
+            }
+            m_html += "<td>" + format_date(new Date(parseInt(m_list[i_row][4]) * 1000)) + "</td>"
+            m_html += "<td>" + m_list[i_row][15] + "</td>"
+            m_html += "<td>" + m_list[i_row][5] + "</td>"
+            m_html += "<td>" + format_money(m_list[i_row][11]) + "</td>"
+            m_html += "</tr>"
+        }
+        var tb = document.getElementById('table'); //获取表格的dom节点
+        // var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        tb.innerHTML = m_html
+    }
+</script>
+<body>
+    <div class="table-one" style="float:left;height:50%;overflow:auto;">
+        <table id="table" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="width:68px">股票名称</th>
+                    <th style="width:58px">涨停时间</th>
+                    <th style="width:28px">状态</th>
+                    <th style="width:98px">涨停原因</th>
+                    <th style="width:60px">成交额</th>
+                </tr>
+            </thead>
+            <tbody id="limit1"></tbody>
+        </table>
+    </div>
+</body>
 </html>
