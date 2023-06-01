@@ -26,30 +26,46 @@
 
 <script>
     $(document).ready(function () {
-        ajaxUrl();
+        var {codes,htmlobj} = getCodes('table', "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/2023-05-31.csv");
+        ajaxUrl('table',codes,htmlobj);
+        var {codes,htmlobj} = getCodes('table-ld', "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/2023-05-31-ld.csv");
+        ajaxUrl('table-ld',codes,htmlobj);
+
+        // ajaxUrl('table-ld', "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/2023-05-31-ld.csv");
     });
 </script>
-
 <script>
-    function ajaxUrl() {
-        var url = "https://raw.githubusercontent.com/2022xiaohu/2022xiaohu.github.io/main/2023-05-31-ld.csv";
+    function getCodes(table, url) {
         var htmlobj = $.ajax({ url: url, async: false });
         console.log(htmlobj.responseText);
-        codes = setTableCvs(htmlobj.responseText);
-
-        var myTarget = setInterval(function(){ update() }, 3000);
-        function update(){
-            codesRise(codes, htmlobj.responseText, setTableInternet)
-            console.log("run......")
+        codes = setTableCvs(htmlobj.responseText, table);
+        return {codes,htmlobj}
+    }
+</script>
+<script>
+    function sleep() {
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+        const sleepTime = async () => {
+            await sleep(2000)
         }
-        
+        sleepTime()
+    }
+</script>
+<script>
+    function ajaxUrl(table,codes,htmlobj) {
+        var myTarget = setInterval(function () { update() }, 3000);
+        function update() {
+            codesRise(codes, htmlobj.responseText, setTableInternet, table)
+            console.log(codes)
+        }
+
     }
 
 </script>
 
 <script>
     //导入并显示CVS数据
-    function setTableCvs(data) {
+    function setTableCvs(data, table) {
         codes = [];
         var m_html = ""
         const mCode = 1   //代码序列号
@@ -75,14 +91,14 @@
             }
             m_html += "</tr>"
         }
-        var tb = document.getElementById('table'); //获取表格的dom节点
+        var tb = document.getElementById(table); //获取表格的dom节点
         tb.innerHTML = m_html
         return codes
     }
 </script>
 <script>
     //导入并显示CVS数据
-    function setTableInternet(dataCvs, dataInternet) {
+    function setTableInternet(dataCvs, dataInternet, table) {
         var m_html = ""
         const mCode = 1   //代码序列号
         const mPrice = 6   //代码序列号
@@ -111,16 +127,16 @@
                 m_html += "<td>" + m_list[mCount] + "</td>"
             }
             if (statusNumber) {
-                if(dataInternet[m_list[mCode]]>0){
+                if (dataInternet[m_list[mCode]] > 0) {
                     m_html += "<td class=\"red\">" + dataInternet[m_list[mCode]] + "</td>"
-                }else{
-                    m_html += "<td>" + dataInternet[m_list[mCode]] + "</td>"
+                } else {
+                    m_html += "<td class=\"green\">" + dataInternet[m_list[mCode]] + "</td>"
                 }
                 statusNumber = false
             }
             m_html += "</tr>"
         }
-        var tb = document.getElementById('table'); //获取表格的dom节点
+        var tb = document.getElementById(table); //获取表格的dom节点
         tb.innerHTML = m_html
     }
 </script>
@@ -138,19 +154,19 @@
 <script>
     //数组分组
     function group(array, subNum) {
-      let index = 0;
-      let newArray = [];
-      while(index < array.length) {
-          newArray.push(array.slice(index, index += subNum));
-      }
-      return newArray;
-  }
-var Array = [1,2,3,4,5,6,7,8,9,10,11,12];`在这里插入代码片`
-var groupArray = group(Array, 6);
+        let index = 0;
+        let newArray = [];
+        while (index < array.length) {
+            newArray.push(array.slice(index, index += subNum));
+        }
+        return newArray;
+    }
+    var Array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; `在这里插入代码片`
+    var groupArray = group(Array, 6);
 </script>
 <script>
     // 东方财富股票实时数据
-    function codesRise(stocks, dataCvs, callback) {
+    function codesRise(stocks, dataCvs, callback, table) {
         if (!stocks || stocks == false) {
             return null;
         }
@@ -159,8 +175,8 @@ var groupArray = group(Array, 6);
         let stock = '';
         // console.log('stocks='+stocks);
         //获取股票代码
-        var groupArray = group(stocks, 200);
-        for(let i = 0; i < groupArray.length; i++){
+        var groupArray = group(stocks, 2000);
+        for (let i = 0; i < groupArray.length; i++) {
             eastmoney(groupArray[i])
         }
 
@@ -180,7 +196,7 @@ var groupArray = group(Array, 6);
             }
 
             $.ajax({
-                url: 'https://push2.eastmoney.com/api/qt/ulist/get?fltt=1&invt=2&cb=jQuery351010838368397660503_1675494557241&fields=f3%2Cf12&secids=' + stock + '&ut=fa5fd1943c7b386f172d6893dbfba10b&pn=1&np=1&pz=200&wbp2u=%7C0%7C0%7C0%7Cweb&_=1675494557502',
+                url: 'https://push2.eastmoney.com/api/qt/ulist/get?fltt=1&invt=2&cb=jQuery351010838368397660503_1675494557241&fields=f3%2Cf12&secids=' + stock + '&ut=fa5fd1943c7b386f172d6893dbfba10b&pn=1&np=1&pz=2000&wbp2u=%7C0%7C0%7C0%7Cweb&_=1675494557502',
                 type: 'POST',
                 async: true,
                 dataType: 'text',
@@ -197,7 +213,7 @@ var groupArray = group(Array, 6);
                         let float = (data[i]['f3'] / 100).toFixed(2);
                         json[data[i]['f12']] = float;
                     }
-                    callback(dataCvs, json);
+                    callback(dataCvs, json, table);
                 },
                 error: function (msg) {
                     console.log(msg);
@@ -210,8 +226,12 @@ var groupArray = group(Array, 6);
 </script>
 
 <body>
-    <div class="table-one">
+    <div class="table-one" style="float:left">
         <table id="table" cellspacing="0">
+        </table>
+    </div>
+    <div class="table-one" style="float:left">
+        <table id="table-ld" cellspacing="0">
         </table>
     </div>
 </body>
