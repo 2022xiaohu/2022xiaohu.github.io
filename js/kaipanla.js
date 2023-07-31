@@ -287,7 +287,7 @@ function newStockRanking(date, callback) {
     };
 
     // 未涨停的昨日一板个股
-    function oneBoardStocksYesterdayHistory(date, id, caption) {
+    function oneBoardStocksYesterday(date, id, caption) {
         var m_data = []
         $.ajax({
             url: 'https://apphis.longhuvip.com/w1/api/index.php',
@@ -840,6 +840,82 @@ function newStockRanking(date, callback) {
         })
 
     };
+
+    // 历史未涨停的昨日一板个股
+    function oneBoardStocksYesterdayHistory(date, id, caption, callback) {
+        var m_data = []
+        $.ajax({
+            url: 'https://apphis.longhuvip.com/w1/api/index.php',
+            type: 'POST',
+            data: {
+                'Order': '1',
+                'a': 'DailyLimitPerformance2',
+                'st': '100',
+                'apiv': 'w29',
+                'Type': '5',
+                'c': 'HisHomeDingPan',
+                'PhoneOSNew': '1',
+                'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                'index': '0',
+                'Day': date,
+                'PidType': '2',
+            },
+            async: true,
+            dataType: 'text',
+            // contentType: 'application/json; charset=UTF-8',
+            success: function (data) {
+                var data = eval('(' + data + ')')['info'][0];//json格式化数据
+                // console.log(data);
+                if (!callback || callback == false) {
+                    set_table2(data, id, caption);
+                } else {
+                    callback(data);
+                }
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        })
+
+    };
+
+        // 历史未涨停的昨日一板个股
+        function zeroBoardStocksYesterdayHistory(date, id, caption, callback) {
+            var m_data = []
+            $.ajax({
+                url: 'https://apphis.longhuvip.com/w1/api/index.php',
+                type: 'POST',
+                data: {
+                    'Order': '1',
+                    'a': 'DailyLimitPerformance2',
+                    'st': '100',
+                    'apiv': 'w29',
+                    'Type': '5',
+                    'c': 'HisHomeDingPan',
+                    'PhoneOSNew': '1',
+                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                    'index': '0',
+                    'Day': date,
+                    'PidType': '1',
+                },
+                async: true,
+                dataType: 'text',
+                // contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    var data = eval('(' + data + ')')['info'][0];//json格式化数据
+                    // console.log(data);
+                    if (!callback || callback == false) {
+                        set_table2(data, id, caption);
+                    } else {
+                        callback(data);
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            })
+    
+        };
 
     // 昨日炸板个股
     function limit_broke_history(date, id, caption, callback) {
