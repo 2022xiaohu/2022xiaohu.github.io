@@ -109,7 +109,7 @@
             var m_date = d.getHours() + "-" + d.getMinutes() + "-" + d.getSeconds();
             var date = d.getHours() * 60 * 60 + d.getMinutes() * 60 + d.getSeconds()
             // 判断时间是否在开盘时间段
-            if (date >= (9 * 60 * 60 + 15 * 60) && date <= (11 * 60 * 60 + 30 * 60) || date >= (13 * 60 * 60)&&(15 * 60 * 60) >= date ) {
+            if (date >= (9 * 60 * 60 + 15 * 60) && date <= (11 * 60 * 60 + 30 * 60) || date >= (13 * 60 * 60)&&(15 * 60 * 60+30*60) >= date ) {
                 return true;
             } else {
                 return false;

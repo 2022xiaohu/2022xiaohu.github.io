@@ -559,7 +559,7 @@
 
     //获取历史未涨停的四板及以上个股
     function get_stocks(dates) {
-        for (var i = 1; i < 22; i++) {
+        for (var i = 1; i < 90; i++) {
             // _data = get_limit2_data_history('fourBoardStocksYesterdayHistory', dates[dates.length - i], '', '', get_stocks_callback)
             _data = fourBoardStocksYesterdayHistory(dates[dates.length - i]);
 
@@ -821,10 +821,15 @@
             } else {
                 m_html += "<tr class=\"cur\">"
             }
-            if (m_list[i_row][16] == 1) {
-                m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            // if (m_list[i_row][16] == 1) {
+            //     m_html += "<td class=\"gbnews gre td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
+            // } else {
+            //     m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
+            // }
+            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {
+                m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
             } else {
-                m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>"
+                m_html += "<td class=\" td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
             }
             m_html += "<td>" + m_list[i_row][15] + "</td>"
             m_html += "<td>" + m_list[i_row][6] + "</td>"
@@ -876,6 +881,7 @@
                 m_html += "<td class=\"red\">" + m_list[i_row][4] + "</td>"
             } else
                 m_html += "<td class=\"gre\">" + m_list[i_row][4] + "</td>"
+                
             m_html += "<td>" + m_list[i_row][11] + "</td>"
             m_html += "<td>" + format_money(m_list[i_row][13]) + "</td>"
             m_html += "</tr>"
