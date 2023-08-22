@@ -955,3 +955,42 @@ function newStockRanking(date, callback) {
         })
 
     };
+
+        // 历史涨停的股票池
+        function get_history_limit(date, id, caption, callback) {
+            var m_data = []
+            $.ajax({
+                url: 'https://apphis.longhuvip.com/w1/api/index.php',
+                type: 'POST',
+                data: {
+                    'Order': "1",
+                    'st': '200',
+                    'a': 'HisDaBanList',
+                    'c': 'HisHomeDingPan',
+                    'PhoneOSNew': '1',
+                    'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+                    'Index': '0',
+                    'Is_st': '1',
+                    'PidType': '1',
+                    'apiv': 'w27',
+                    'Type': '6',
+                    'Day': date  // 2021-10-25
+                },
+                async: true,
+                dataType: 'text',
+                // contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    var data = eval('(' + data + ')')['list'];//json格式化数据
+                    // console.log(data);
+                    var stocks_code = new Array()
+                    for (i = 0; i < data.length; i++) {
+                        stocks_code.push(data[i][0])
+                    }
+                    callback(stocks_code, data, id, caption, set_table_history_limit);
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            })
+    
+        };
