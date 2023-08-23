@@ -127,13 +127,29 @@
             }
         }
 
+        // function auto_update(Func) {
+        //     Func()
+        //     date = getDate()
+        //     _date = historyDateEastmoney()
+        //     _date = _date[_date.length-1]
+            
+        //     if (date == _date) {
+        //         ID_THREAD = setInterval(is_running, 1000 * 3, Func); //指定3秒刷新一次
+        //     } else {
+        //         if (ID_THREAD != -1) {
+        //             clearInterval(ID_THREAD)
+        //         }
+        //     }
+        //     return ID_THREAD
+        // }
+
+
         function auto_update(Func) {
             Func()
-            date = getDate()
-            _date = historyDateEastmoney()
-            _date = _date[_date.length-1]
+            var d = new Date();
+            var n = d.getDay();
             
-            if (date == _date) {
+            if (n != 0 && n != 6) {
                 ID_THREAD = setInterval(is_running, 1000 * 3, Func); //指定3秒刷新一次
             } else {
                 if (ID_THREAD != -1) {
@@ -142,6 +158,7 @@
             }
             return ID_THREAD
         }
+        
         // 获取交易日日期
         function get_server_data() {
             var m_data = []
