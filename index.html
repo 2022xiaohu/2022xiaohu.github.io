@@ -500,6 +500,7 @@
         limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_last_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
         limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
+        get_history_limit(data[_indexof + 1],'history_limit','历史涨停的股票池',codes_rise) //历史涨停的股票池
     }
 
     // 右箭头回调函数
@@ -527,7 +528,7 @@
         limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_last_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
         limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
-
+        get_history_limit(data[_indexof + 1],'history_limit','历史涨停的股票池',codes_rise) //历史涨停的股票池
     }
 
     // 获取历史日期
@@ -574,6 +575,9 @@
         _stocks33 = get_limit2_data_history('twoBoardStocksYesterdayHistory', data[_indexof], 'history33', '历史未涨停的二板个股', history_33)
         _stocks22 = get_limit2_data_history('oneBoardStocksYesterdayHistory', data[_indexof], 'history22', '历史未涨停的一板个股', history_22)
         get_limit2_data_history('limit_broke_history', data[_indexof], 'broke-history', '昨日炸板个股', history_broke)
+        codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
+        limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
+        get_history_limit(data[_indexof + 1],'history_limit','历史涨停的股票池',codes_rise) //历史涨停的股票池
     }
 
     //获取历史未涨停的四板及以上个股
