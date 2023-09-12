@@ -216,7 +216,7 @@
        function historyDateEastmoney() {
         var m_data = []
         $.ajax({
-            url: 'https://push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery351020143393668275844_1674273725401&secid=0.000001&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1&fields2=f51&klt=101&fqt=1&end=20500101&lmt=1000000&_=1674273725455 ',
+            url: 'https://push2his.eastmoney.com/api/qt/stock/kline/get?cb=jQuery351020143393668275844_1674273725401&secid=1.000001&ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1&fields2=f51&klt=101&fqt=1&end=20500101&lmt=1000000&_=1674273725455 ',
             type: 'GET',
             async: false,//同步
             dataType: 'text',

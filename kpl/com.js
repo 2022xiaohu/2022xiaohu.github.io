@@ -1171,21 +1171,21 @@ $(function () {
     //获取所有股票
     $_.getAllStock();
 
-    if ($_.CheckSystem.isIE()) {
-        $('body').html('<br /><br /><center><div><span>抱歉，当前网站不支持IE浏览器，请使用非IE浏览器访问！</span></h2></center>').show();
-    }
-    else if (($_.CheckSystem.isAndroid() || $_.CheckSystem.isIos()) && !window.moibleRead_) {
-        $('head').append('<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">');
+    // if ($_.CheckSystem.isIE()) {
+    //     $('body').html('<br /><br /><center><div><span>抱歉，当前网站不支持IE浏览器，请使用非IE浏览器访问！</span></h2></center>').show();
+    // }
+    // else if (($_.CheckSystem.isAndroid() || $_.CheckSystem.isIos()) && !window.moibleRead_) {
+    //     $('head').append('<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">');
 
-        if ($_.CheckSystem.isIos()) dlhref = 'https://itunes.apple.com/us/app/kai-pan-la/id1071188962?l=zh&ls=1&mt=8';
-        else dlhref = 'https://res.kaipanla.com/tj/index.php?c=GetVersion&a=redirect&v=1';
+    //     if ($_.CheckSystem.isIos()) dlhref = 'https://itunes.apple.com/us/app/kai-pan-la/id1071188962?l=zh&ls=1&mt=8';
+    //     else dlhref = 'https://res.kaipanla.com/tj/index.php?c=GetVersion&a=redirect&v=1';
 
-        dlhref = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.aiyu.kaipanla';
+    //     dlhref = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.aiyu.kaipanla';
 
-        //$('body').html('<br /><br /><center><div style="padding:30px;"><span>抱歉，当前网站不支持移动设备访问，请前往&nbsp;<a class="red" href="' + dlhref+'">下载开盘啦APP</a>&nbsp;进行浏览！</span></h2></center>').show();
+    //     //$('body').html('<br /><br /><center><div style="padding:30px;"><span>抱歉，当前网站不支持移动设备访问，请前往&nbsp;<a class="red" href="' + dlhref+'">下载开盘啦APP</a>&nbsp;进行浏览！</span></h2></center>').show();
 
-        $('body').html('<img style="width:100%;" src="' + $_.imgUrl + 'other/invtBg.jpg" />').css({ 'background-color': '#ff2447' }).attr('onclick', "window.open('" + dlhref + "')");
-    }
+    //     $('body').html('<img style="width:100%;" src="' + $_.imgUrl + 'other/invtBg.jpg" />').css({ 'background-color': '#ff2447' }).attr('onclick', "window.open('" + dlhref + "')");
+    // }
 });
 
 
