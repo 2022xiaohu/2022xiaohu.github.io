@@ -481,7 +481,8 @@
 <script type="text/javascript">
     // 左箭头回调函数
     function οnclick_to_left() {
-        clearInterval(ID_THREAD)
+        clearInterval(ID_THREAD)//停止循环
+        clearInterval(ID_THREAD_ZJT)//停止循环
         dates = document.getElementById("meeting").value
         console.log(dates);
         data = all_data//获取历史日期
@@ -491,16 +492,19 @@
         }
         document.getElementById("meeting").value = data[_indexof] //设置日期
 
-        show_form(data[_indexof])
-        _indexof = _indexof - 1
-        fourBoardStocksYesterdayHistory1(data[_indexof], 'history55', '历史未涨停的四板个股', history_55);
-        threeBoardStocksYesterdayHistory(data[_indexof], 'history44', '历史未涨停的三板个股', history_44);
-        twoBoardStocksYesterdayHistory(data[_indexof], 'history33', '历史未涨停的二板个股', history_33);
-        oneBoardStocksYesterdayHistory(data[_indexof], 'history22', '历史未涨停的一板个股', history_22)
-        limit_broke_history(data[_indexof], 'broke-history', '昨日炸板个股', history_last_broke)
-        codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
-        limit_broke_history(data[_indexof + 1], 'broke', '炸板', history_broke)
-        get_history_limit(data[_indexof + 1],'history_limit','历史涨停的股票池',codes_rise) //历史涨停的股票池
+        ID_THREAD_ZJT =auto_update(run)
+        function run(){
+            show_form(data[_indexof])
+            fourBoardStocksYesterdayHistory1(data[_indexof - 1], 'history55', '历史未涨停的四板个股', history_55);
+            threeBoardStocksYesterdayHistory(data[_indexof - 1], 'history44', '历史未涨停的三板个股', history_44);
+            twoBoardStocksYesterdayHistory(data[_indexof - 1], 'history33', '历史未涨停的二板个股', history_33);
+            oneBoardStocksYesterdayHistory(data[_indexof - 1], 'history22', '历史未涨停的一板个股', history_22)
+            limit_broke_history(data[_indexof - 1], 'broke-history', '昨日炸板个股', history_last_broke)
+            codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
+            limit_broke_history(data[_indexof], 'broke', '炸板', history_broke)
+            get_history_limit(data[_indexof],'history_limit','历史涨停的股票池',codes_rise) //历史涨停的股票池
+        }
+
     }
 
     // 右箭头回调函数
@@ -668,6 +672,7 @@
 
 <script type="text/javascript">
     var ID_THREAD = -1; //循环线程
+    var ID_THREAD_ZJT = -1; //循环线程
     var all_theme = []; //题材数组
     var stocks55, stocks44, stocks33 = new Array();
     var stock = [], data_all_four = [], all_data = [], history_limit = [];
