@@ -980,7 +980,7 @@ function get_history_limit(date, id, caption, callback) {
         type: 'POST',
         data: {
             'Order': "1",
-            'st': '70',
+            'st': '60',
             'a': 'HisDaBanList',
             'c': 'HisHomeDingPan',
             'PhoneOSNew': '1',
