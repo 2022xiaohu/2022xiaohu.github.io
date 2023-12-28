@@ -953,7 +953,7 @@ function limit_broke_history(date, id, caption, callback) {
             'Filter': '0',
             'FilterTIB': '0',
             'FilterGem': '0',
-            'DeviceID': '3d23c153-4378-3f7b-b247-1b77fda9b02b',
+            'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
             'index': '0',
             'VerSion': '5.13.0.0'
         },
