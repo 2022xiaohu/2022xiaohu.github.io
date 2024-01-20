@@ -46,20 +46,51 @@
         </div>
     </div>
     <div class="table-one" style="float:left;width:100%;height:100%;overflow:auto;">
-        <table id="table-list-sort" cellspacing="0">
-            <thead>
-                <tr>
-                    <th style="width:68px">股票名称</th>
-                    <th style="width:40px">涨幅</th>
-                    <th style="width:40px">涨速</th>
-                    <th style="width:60px">成交额</th>
-                    <th style="width:180px">板块</th>
-                </tr>
-            </thead>
-            <tbody id="table-list"></tbody>
-        </table>
+        <div class="table-one" style="width:100%;height:20%;overflow:auto;">
+            <table id="table-list-sort" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="width:68px">板块</th>
+                        <th style="width:40px">强度</th>
+                        <th style="width:40px">主力净额</th>
+                        <th style="width:60px">涨速</th>
+                        <th style="width:60px">成交额</th>
+                    </tr>
+                </thead>
+                <tbody id="bkjx-table-list"></tbody>
+            </table>
+        </div>
+        <div class="table-one" style="float:left;overflow:auto;">
+            <table id="table-list-1" cellspacing="0">
+                <!-- <tbody id="table-list-1"></tbody> -->
+            </table>
+        </div>
+        <div class="table-one" style="float:left;overflow:auto;">
+            <table id="table-list-2" cellspacing="0">
+                <!-- <tbody id="table-list-2"></tbody> -->
+            </table>
+        </div>
+        <div class="table-one" style="float:left;overflow:auto;">
+            <table id="table-list-3" cellspacing="0">
+                <!-- <tbody id="table-list-3"></tbody> -->
+            </table>
+        </div>
+        <div class="table-one" style="float:left;overflow:auto;">
+            <table id="table-list-4" cellspacing="0">
+                <!-- <tbody id="table-list-4"></tbody> -->
+            </table>
+        </div>
+        <div class="table-one" style="float:left;overflow:auto;">
+            <table id="table-list-5" cellspacing="0">
+                <!-- <tbody id="table-list-5"></tbody> -->
+            </table>
+        </div>
+        <div class="table-one" style="float:left;overflow:auto;">
+            <table id="table-list-6" cellspacing="0">
+                <!-- <tbody id="table-list-6"></tbody> -->
+            </table>
+        </div>
     </div>
-
 </body>
 
 <!-- 日期事件 -->
@@ -75,7 +106,7 @@
             return
         }
         if (data.length == _indexof + 1) {
-            newStockRanking(data[_indexof], setTable)
+            bkStockRanking(data[_indexof], setTable)
         }
         document.getElementById("meeting").value = data[_indexof] //设置日期
         hisStockRanking(data[_indexof], setTable)
@@ -98,7 +129,7 @@
             return
         }
         if (data.length == _indexof + 1) {
-            newStockRanking(data[_indexof], setTable)
+            bkStockRanking(data[_indexof], setTable)
         } else {
             hisStockRanking(data[_indexof], setTable)
         }
@@ -137,7 +168,7 @@
             return
         }
         if (data.length == _indexof + 1) {
-            newStockRanking(data[_indexof], setTable)
+            bkStockRanking(data[_indexof], setTable)
         } else {
             hisStockRanking(data[_indexof], setTable)
         }
@@ -147,9 +178,12 @@
 
 <!-- 表格排序 -->
 <script type="text/javascript">
-    $(function () {
-        $("#table-list-sort").tablesorter();
-    });
+    // $(function () {
+    //     $("#table-list-sort").tablesorter();
+    // });
+    // $(function () {
+    //     $("#table-list-1").tablesorter();
+    // });
 </script>
 
 <script type="text/javascript">
@@ -165,7 +199,8 @@
         date_history = _date = historyDateEastmoney()
         document.getElementById("meeting").value = date_history[date_history.length - 1] //设置日期
         _date = _date[_date.length - 1]
-        newStockRanking(_date, setTable)
+        bkjxStockRanking(_date, bkjxSetTable, bkStockRanking, setTable)
+        // bkStockRanking(_date, setTable)
         ID_THREAD = self.setInterval("run()", 3000)
         // auto_update(run)
     }
@@ -187,7 +222,7 @@
         if (get_time()) {
             _date = historyDateEastmoney()
             _date = _date[_date.length - 1]
-            newStockRanking(_date, setTable)
+            bkStockRanking(_date, setTable)
         }
 
     }
@@ -200,13 +235,15 @@
             } else if (money / 10000 > 1) {
                 return (money / 10000).toFixed(0) + "万"
             }
-        } else {
+        } else if (money < 0) {
             money = Math.abs(money);
             if (money / 10000 > 10000) {
                 return "-" + (money / 100000000).toFixed(2) + "亿"
             } else if (money / 10000 > 1) {
                 return "-" + (money / 10000).toFixed(0) + "万"
             }
+        } else {
+            return 0;
         }
     }
 
@@ -236,7 +273,75 @@
     };
 
     // 设置表格
-    function setTable(data) {
+    function setTable(data, table, caption) {
+        all_theme = [];
+        var m_html = ""
+        var m_th = ""
+        var m_list = data['list']
+        // m_html += "<caption >"+caption+"</caption>"
+        m_html += "<tr><th >股票名称</th><th >涨幅</th><th >涨速</th><th >成交额</th><th >流通市值</th><th >实际流通</th><th >板块</th></tr>"
+        for (var i_row = 0; i_row < m_list.length; i_row++) {
+            if (i_row % 2 == 0) {
+                m_html += "<tr>"
+            } else {
+                m_html += "<tr class=\"cur\">"
+            }
+            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {//设置创业板和科创板股票颜色
+                //破板背景色为绿色
+                if (m_list[i_row][24] == "破板") {
+                    m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:green;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色          
+                } else {
+                    m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:red;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色
+                }
+            } else {
+                //破板背景色为绿色
+                if (m_list[i_row][24] == "破板") {
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:green;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色          
+                } else {
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:red;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色
+                }
+            }
+
+            // 设置涨幅颜色
+            if (m_list[i_row][6] > 0) {
+                //判断是否涨停
+                if (m_list[i_row][23].indexOf('板') != -1) {
+                    m_html += "<td class=\"white rbnews\">" + m_list[i_row][6] + "<b style=\"font-size:8px;background:red;color:white\">" + m_list[i_row][23] + "</b>" + "</td>"
+                } else {
+                    m_html += "<td class=\"red\">" + m_list[i_row][6] + "</td>"
+                }
+            } else {
+                m_html += "<td class=\"gre\">" + m_list[i_row][6] + "</td>"
+            }
+            // 设置涨速颜色
+            if (m_list[i_row][9] > 0) {
+                m_html += "<td class=\"red\">" + m_list[i_row][9].toFixed(2) + "</td>"
+            } else {
+                m_html += "<td class=\"gre\">" + m_list[i_row][9].toFixed(2) + "</td>"
+            }
+
+            m_html += "<td>" + formatMoney(m_list[i_row][7]) + "</td>"//成交额
+            m_html += "<td>" + formatMoney(m_list[i_row][37]) + "</td>"//流通市值
+            m_html += "<td>" + formatMoney(m_list[i_row][10]) + "</td>"//实际流通
+            m_html += "<td>" + m_list[i_row][4] + "</td>"//板块
+            m_html += "</tr>"
+        }
+        var tb = document.getElementById(table); //获取表格的dom节点
+        if (m_list.length == 0) {
+            tb.innerHTML = m_th + ''
+        } else
+            tb.innerHTML = m_th + m_html
+        var cap = document.getElementById(table).createCaption();
+        cap.innerHTML = caption
+        $(function () {
+            $("#" + table).tablesorter();
+        });
+        $("#" + table).trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
+    }
+
+
+    // 设置板块精选表格
+    function bkjxSetTable(data) {
         all_theme = [];
         var m_html = ""
         var m_th = ""
@@ -247,40 +352,32 @@
             } else {
                 m_html += "<tr class=\"cur\">"
             }
-            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {
-                m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
-            } else {
-                m_html += "<td class=\" td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //设置股票的颜色
-            }
-
-            // 设置涨幅颜色
+            m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "</td>" //板块
+            m_html += "<td>" + m_list[i_row][2] + "</td>"//强度
+            // m_html += "<td>" + formatMoney(m_list[i_row][6])+ "</td>"//主力净额
             if (m_list[i_row][6] > 0) {
-                //判断是否涨停
-                if (m_list[i_row][23].indexOf('板') != -1) {
-                    m_html += "<td class=\"red rbnews\">" + m_list[i_row][6] + "</td>"
-                } else {
-                    m_html += "<td class=\"red\">" + m_list[i_row][6] + "</td>"
-                }
+                m_html += "<td class=\"red\">" + formatMoney(m_list[i_row][6]) + "</td>"
             } else {
-                m_html += "<td class=\"gre\">" + m_list[i_row][6] + "</td>"
+                m_html += "<td class=\"gre\">" + formatMoney(m_list[i_row][6]) + "</td>"
             }
+            // m_html += "<td>" + m_list[i_row][4].toFixed(2) + "</td>"//涨速
             // 设置涨速颜色
-            if (m_list[i_row][9] > 0) {
-                m_html += "<td class=\"red\">" + m_list[i_row][9] + "</td>"
+            if (m_list[i_row][4] > 0) {
+                m_html += "<td class=\"red\">" + m_list[i_row][4].toFixed(2) + "</td>"
             } else {
-                m_html += "<td class=\"gre\">" + m_list[i_row][9] + "</td>"
+                m_html += "<td class=\"gre\">" + m_list[i_row][4].toFixed(2) + "</td>"
             }
-
-            m_html += "<td>" + formatMoney(m_list[i_row][7]) + "</td>"//成交额
-            m_html += "<td>" + m_list[i_row][4] + "</td>"//成交额
+            m_html += "<td>" + formatMoney(m_list[i_row][5]) + "</td>"//成交额
             m_html += "</tr>"
         }
-        var tb = document.getElementById('table-list'); //获取表格的dom节点
+        var tb = document.getElementById('bkjx-table-list'); //获取表格的dom节点
         if (m_list.length == 0) {
             tb.innerHTML = m_th + ''
         } else
             tb.innerHTML = m_th + m_html
-
+        $(function () {
+            $("#table-list-sort").tablesorter();
+        });
         $("#table-list-sort").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
     }
 </script>

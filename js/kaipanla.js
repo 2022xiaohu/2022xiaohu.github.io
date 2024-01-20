@@ -1,3 +1,87 @@
+// 板块 精选
+function bkjxStockRanking(date, callback, callback2, table2) {
+    var list_table = ["table-list-1","table-list-2","table-list-3","table-list-4","table-list-5","table-list-6"]
+    $.ajax({
+        url: 'https://apphq.longhuvip.com/w1/api/index.php',
+        type: 'POST',
+        data: {
+            'Order': '1',
+            'a': 'RealRankingInfo',
+            'st': '30',
+            'c': 'ZhiShuRanking',
+            'PhoneOSNew': '1',
+            'old': '1',
+            'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+            'VerSion': '5.13.0.0',
+            'Index': '0',
+            'apiv': 'w35',
+            'Type': '1',
+            'ZSType': '7',
+        },
+        async: true,
+        dataType: 'text',
+        // contentType: 'application/json; charset=UTF-8',
+        success: function (data) {
+            var data = eval('(' + data + ')');//json格式化数据
+            console.log(data);
+            callback(data)
+            for(i=0; i<6; i++){
+                callback2(date, table2, data['list'][i][0], list_table[i], data['list'][i][1])
+            }
+            
+        },
+        error: function (msg) {
+            console.log(msg);
+        }
+    })
+
+};
+
+// 板块内股票
+function bkStockRanking(date, callback, PlateID, table, caption) {
+    var m_data = []
+    $.ajax({
+        url: 'https://apphq.longhuvip.com/w1/api/index.php',
+        type: 'POST',
+        data: {
+            'Order': '1',
+            'a': 'ZhiShuStockList_W8',
+            'st': '30',
+            'c': 'ZhiShuRanking',
+            'PhoneOSNew': '1',
+            'old': '1',
+            'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
+            'VerSion': '5.13.0.0',
+            'IsZZ': '0',
+            'Index': '0',
+            // 'Date': date,
+            'apiv': 'w35',
+            'Type': '6',
+            'IsKZZType': '0',
+            'UserID': '0',
+            'PlateID': PlateID,
+            // 'FilterMotherboard': '0',
+            // 'Filter': '0',
+            // 'Ratio': '6',
+            // 'FilterTIB': '0',
+            // 'FilterGem': '0',
+            // 'PidType': '5',
+        },
+        async: true,
+        dataType: 'text',
+        // contentType: 'application/json; charset=UTF-8',
+        success: function (data) {
+            var data = eval('(' + data + ')');//json格式化数据
+            console.log(data);
+            callback(data, table, caption)
+        },
+        error: function (msg) {
+            console.log(msg);
+        }
+    })
+
+};
+
 // 获取股票历史涨幅
 function hisStockRanking(date, callback) {
     var m_data = []
