@@ -109,7 +109,7 @@
             bkjxStockRanking(data[_indexof], bkjxSetTable, bkStockRanking, setTable)
         }
         document.getElementById("meeting").value = data[_indexof] //设置日期
-        bkjxStockRankingHistory(data[_indexof], bkjxSetTable, bkStockRankingHistory, setTable)
+        bkjxStockRankingHistory(data[_indexof], bkjxSetTable, bkStockRankingHistory, setTableHistory)
 
     }
 
@@ -131,7 +131,7 @@
         if (data.length == _indexof + 1) {
             bkjxStockRanking(data[_indexof], bkjxSetTable, bkStockRanking, setTable)
         } else {
-            bkjxStockRankingHistory(data[_indexof], bkjxSetTable, bkStockRankingHistory, setTable)
+            bkjxStockRankingHistory(data[_indexof], bkjxSetTable, bkStockRankingHistory, setTableHistory)
         }
 
 
@@ -170,7 +170,7 @@
         if (data.length == _indexof + 1) {
             bkjxStockRanking(dates, bkjxSetTable, bkStockRanking, setTable)
         } else {
-            bkjxStockRankingHistory(dates, bkjxSetTable, bkStockRankingHistory, setTable)
+            bkjxStockRankingHistory(dates, bkjxSetTable, bkStockRankingHistory, setTableHistory)
         }
 
     }
@@ -341,6 +341,73 @@
         $("#" + table).trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
     }
 
+// 设置表格
+    //data:数据,table:表格,caption:标题
+    function setTableHistory(data, table, caption) {
+        all_theme = [];
+        // var m_html = ""
+        var m_th = ""
+        var m_list = data['list']
+        // m_html += "<caption >"+caption+"</caption>"
+        var m_html = "<tr><th >股票名称</th><th >涨幅</th><th >涨幅</th><th >成交额</th><th >流通市值</th><th >实际流通</th></tr>"
+        for (var i_row = 0; i_row < m_list.length; i_row++) {
+            if (i_row % 2 == 0) {
+                m_html += "<tr>"
+            } else {
+                m_html += "<tr class=\"cur\">"
+            }
+            if (m_list[i_row][0].slice(0, 1) == '3' || m_list[i_row][0].slice(0, 3) == '688') {//设置创业板和科创板股票颜色
+                //破板背景色为绿色
+                if (m_list[i_row][24] == "破板") {
+                    m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:green;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色          
+                } else {
+                    m_html += "<td class=\"red  td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:red;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色
+                }
+            } else {
+                //破板背景色为绿色
+                if (m_list[i_row][24] == "破板") {
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:green;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色          
+                } else {
+                    m_html += "<td class=\"td1 over-chart\" data-name=\"" + m_list[i_row][1] + "\" data-sid=\"" + m_list[i_row][0] + "\" data-ct=\"big\">" + m_list[i_row][1] + "<b style=\"font-size:8px;background:red;color:white\">" + m_list[i_row][24] + "</b>" + "</td>" //设置股票的颜色
+                }
+            }
+
+            // 设置涨幅颜色
+            if (m_list[i_row][6] > 0) {
+                //判断是否涨停
+                if (m_list[i_row][23].indexOf('板') != -1) {
+                    m_html += "<td class=\"white rbnews\">" + m_list[i_row][6] + "<b style=\"font-size:8px;background:red;color:white\">" + m_list[i_row][23] + "</b>" + "</td>"
+                } else {
+                    m_html += "<td class=\"red\">" + m_list[i_row][6] + "</td>"
+                }
+            } else {
+                m_html += "<td class=\"gre\">" + m_list[i_row][6] + "</td>"
+            }
+            // 设置涨速颜色
+            if (m_list[i_row][9] > 0) {
+                m_html += "<td class=\"red\">" + m_list[i_row][9].toFixed(2) + "</td>"
+            } else {
+                m_html += "<td class=\"gre\">" + m_list[i_row][9].toFixed(2) + "</td>"
+            }
+
+            m_html += "<td>" + formatMoney(m_list[i_row][7]) + "</td>"//成交额
+            m_html += "<td>" + formatMoney(m_list[i_row][38]) + "</td>"//流通市值
+            m_html += "<td>" + formatMoney(m_list[i_row][10]) + "</td>"//实际流通
+            // m_html += "<td>" + m_list[i_row][4] + "</td>"//板块
+            m_html += "</tr>"
+        }
+        var tb = document.getElementById(table); //获取表格的dom节点
+        if (m_list.length == 0) {
+            tb.innerHTML = m_th + ''
+        } else
+            tb.innerHTML = m_th + m_html
+        var cap = document.getElementById(table).createCaption();
+        cap.innerHTML = caption
+        $(function () {
+            $("#" + table).tablesorter();
+        });
+        $("#" + table).trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
+    }
 
     // 设置板块精选表格
     function bkjxSetTable(data) {
