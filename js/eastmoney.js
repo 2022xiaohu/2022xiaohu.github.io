@@ -1,4 +1,56 @@
 // 东方财富股票实时数据
+function bkStocksrise(stocks, id, caption, callback) {
+    if (!stocks || stocks == false) {
+        return null;
+    }
+    var m_data = []
+
+    let stock = '';
+    // console.log('stocks='+stocks);
+    //获取股票代码
+
+    for (let i = 0; i < stocks.length; i++) {
+        // if(stocks[i]=='000721'){
+        //    console.log(stocks[i]);
+        //    status = 1;
+        // }
+        if (stocks[i].slice(0, 1) == 6) {
+            // stocks[i]='1.'+stocks[i]+'%2C';
+            stock = stock + '1.' + stocks[i] + '%2C';
+        } else {
+            // stocks[i]='0.'+stocks[i]+'%2C';
+            stock = stock + '0.' + stocks[i] + '%2C';
+        }
+    }
+
+    $.ajax({
+        url: 'https://push2.eastmoney.com/api/qt/ulist/get?fltt=1&invt=2&cb=jQuery351010838368397660503_1675494557241&fields=f3%2Cf12&secids=' + stock + '&ut=fa5fd1943c7b386f172d6893dbfba10b&pn=1&np=1&pz=20&wbp2u=%7C0%7C0%7C0%7Cweb&_=1675494557502',
+        type: 'POST',
+        async: true,
+        dataType: 'text',
+        // contentType: 'application/json; charset=UTF-8',
+        success: function (data) {
+            var regex3 = /\{.*\}/;  // {} 花括号，大括号
+            // res.send(JSON.stringify(body.match(regex3)));// JSON格式化
+            data = data.match(regex3)[0];
+            // console.log(data);
+            var data = eval('(' + data + ')')['data']['diff'];//json格式化数据
+            //处理数据
+            let json = {};
+            for (let i = 0; i < data.length; i++) {
+                let float = (data[i]['f3'] / 100).toFixed(2);
+                json[data[i]['f12']] = float;
+            }
+            callback(json, id, caption);
+        },
+        error: function (msg) {
+            console.log(msg);
+        }
+    })
+
+};
+
+// 东方财富股票实时数据
 function codes_rise(stocks, _data, id, caption, callback) {
     if (!stocks || stocks == false) {
         return null;
