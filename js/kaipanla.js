@@ -1,3 +1,5 @@
+url='http://192.168.2.250:5000/kaipanla'
+
 // 东方财富股票实时数据
 function bkStocksrise(_data, id, caption, callback) {
     stocks = _data['Stocks']
@@ -95,7 +97,7 @@ function bkjxStockRanking(date, callback, callback2, table2) {
 function bkjxStockRankingHistory(date, callback, callback2, table2) {
     var list_table = ["table-list-1","table-list-2","table-list-3","table-list-4","table-list-5","table-list-6"]
     $.ajax({
-        url: 'http://192.168.1.3:5000/kaipanla',
+        url: 'http://192.168.2.250:5000/kaipanla',
         type: 'POST',
         data: {
             'Order': '1',
@@ -181,7 +183,7 @@ function bkStockRanking(date, callback, PlateID, table, caption) {
 function bkStockRankingHistory(date, callback, PlateID, table, caption) {
     var m_data = []
     $.ajax({
-        url: 'http://192.168.1.3:5000/kaipanla',
+        url: 'http://192.168.2.250:5000/kaipanla',
         type: 'POST',
         data: {
             'Order': '1',
@@ -227,7 +229,7 @@ function bkStockRankingHistory(date, callback, PlateID, table, caption) {
 function hisStockRanking(date, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -346,7 +348,7 @@ function get_broke() {
 function fourBoardStocksYesterdayHistory(date) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -446,7 +448,7 @@ function get_daily_limit_performance_sort(id, caption) {
 function oneStocksHistory(date, id, caption) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '0',
@@ -481,7 +483,7 @@ function oneStocksHistory(date, id, caption) {
 function oneStocksYesterdayHistory(date, id, caption) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '0',
@@ -515,7 +517,7 @@ function oneStocksYesterdayHistory(date, id, caption) {
 function oneBoardStocksYesterday(date, id, caption) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -549,7 +551,7 @@ function oneBoardStocksYesterday(date, id, caption) {
 function twoStocksYesterdayHistory(date, id, caption) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '0',
@@ -584,7 +586,7 @@ function twoStocksYesterdayHistory(date, id, caption) {
 function threeStocksYesterdayHistory(date, id, caption) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '0',
@@ -621,7 +623,7 @@ function fourStocksYesterdayHistory(date, id, caption) {
     }
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '0',
@@ -658,7 +660,7 @@ function fourBoardStocksYesterdayHistorySetTable(date, id, caption) {
     }
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -956,7 +958,7 @@ function fourBoardStocksYesterday(id, caption) {
 function fourBoardStocksYesterdayHistory1(date, id, caption, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -994,7 +996,7 @@ function fourBoardStocksYesterdayHistory1(date, id, caption, callback) {
 function threeBoardStocksYesterdayHistory(date, id, caption, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -1032,7 +1034,7 @@ function threeBoardStocksYesterdayHistory(date, id, caption, callback) {
 function twoBoardStocksYesterdayHistory(date, id, caption, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -1070,7 +1072,7 @@ function twoBoardStocksYesterdayHistory(date, id, caption, callback) {
 function oneBoardStocksYesterdayHistory(date, id, caption, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -1108,7 +1110,7 @@ function oneBoardStocksYesterdayHistory(date, id, caption, callback) {
 function zeroBoardStocksYesterdayHistory(date, id, caption, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -1161,7 +1163,7 @@ function limit_broke_history(date, id, caption, callback) {
 
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': '1',
@@ -1201,7 +1203,7 @@ function limit_broke_history(date, id, caption, callback) {
 function get_history_limit(date, id, caption, callback) {
     var m_data = []
     $.ajax({
-        url: 'https://apphis.longhuvip.com/w1/api/index.php',
+        url: url,
         type: 'POST',
         data: {
             'Order': "1",
