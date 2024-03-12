@@ -734,15 +734,15 @@
 
     }
     function run(dates = all_data) {
-        get_daily_limit_performance1('limit1', '一板');
-        get_daily_limit_performance2('limit2', '二板');
-        get_daily_notlimit_performance1('limit22', '未涨停的昨日一板个股');
-        threePlate('limit3', '三板');
-        twoBoardStocksYesterday('limit33', '未涨停的昨日二板个股');
-        fourPlate('limit4', '四板');
-        threeBoardStocksYesterday('limit44', '未涨停的昨日三板个股');
-        fivePlate('limit5', '5板或更高');
-        fourBoardStocksYesterday('limit55', '未涨停的昨日四板个股');
+        get_daily_limit_performance1('一板', 'limit1', 'limit-1', set_table1);
+        get_daily_limit_performance2('二板', 'limit2', 'limit-2', set_table1);
+        get_daily_notlimit_performance1('未涨停的昨日一板个股', 'limit22', 'limit-22', set_table2);
+        threePlate('三板', 'limit3', 'limit-3', set_table1);
+        twoBoardStocksYesterday('未涨停的昨日二板个股', 'limit33', 'limit-33', set_table2);
+        fourPlate('四板', 'limit4', 'limit-4', set_table1);
+        threeBoardStocksYesterday('未涨停的昨日三板个股', 'limit44', 'limit-44', set_table2);
+        fivePlate('5板或更高', 'limit5', 'limit-5', set_table1);
+        fourBoardStocksYesterday('未涨停的昨日四板个股', 'limit55', 'limit-55', set_table2);
 
         fourBoardStocksYesterdayHistory1(dates[dates.length - 2], 'history55', '历史未涨停的四板个股', history_55);
         threeBoardStocksYesterdayHistory(dates[dates.length - 2], 'history44', '历史未涨停的三板个股', history_44);
@@ -751,11 +751,11 @@
         // zeroBoardStocksYesterdayHistory(dates[dates.length - 2], 'broke-history', '昨日一板炸板个股', history_last_broke)
         limit_broke_history(dates[dates.length - 2], 'broke-history', '昨日炸板个股', history_last_broke)
         codes_rise(stock, data_all_four, 'history-all-four', '历史未涨停的四板及以上个股', set_table2_history)
-        get_broke() //炸板
+        get_broke('broke-history-id') //炸板
         get_history_limit(dates[dates.length - 2],'history_limit','历史涨停的股票池',codes_rise) //历史涨停的股票池
     }
 
-    function set_table1(data, id, caption) {
+    function set_table1(data, tbodyId, tableId, caption) {
         all_theme = [];
         var m_html = ""
         var m_list = data
@@ -782,18 +782,21 @@
             m_html += "<td>" + format_money(m_list[i_row][11]) + "</td>"
             m_html += "</tr>"
         }
-        var tb = document.getElementById(id); //获取表格的dom节点
+        var tb = document.getElementById(tbodyId); //获取表格的dom节点
         var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
+        var cap = document.getElementById(tableId).createCaption();//创建标题
+        cap.innerHTML = caption
+
         tb.innerHTML = m_html
-        $("#limit-1").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-2").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-3").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-4").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-5").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        $("#"+tbodyId).trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-2").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-3").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-4").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-5").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
     }
 
 
-    function set_table2(data, id, caption) {
+    function set_table2(data, tbodyId, tableId, caption) {
         all_theme = [];
         var m_html = ""
         var m_th = ""
@@ -825,18 +828,19 @@
 
             m_html += "</tr>"
         }
-        var tb = document.getElementById(id); //获取表格的dom节点
-        var caption = ""
+        var tb = document.getElementById(tbodyId); //获取表格的dom节点
+        var caption = "<caption align=\"top\">" + caption + "-" + m_list.length + "</caption>"
         if (m_list.length == 0) {
-            tb.innerHTML = caption + m_th + ''
+            tb.innerHTML = m_th + ''
         } else
-            tb.innerHTML = caption + m_th + m_html
-
-        $("#limit-11").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-22").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-33").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-44").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
-        $("#limit-55").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+            tb.innerHTML = m_th + m_html
+        var cap = document.getElementById(tableId).createCaption();//创建标题
+        cap.innerHTML = caption
+        $("#"+tbodyId).trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-22").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-33").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-44").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
+        // $("#limit-55").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题
     }
 
     function set_table2_history(data, id, caption, limit) {
@@ -889,7 +893,7 @@
         $("#history-all-four-id").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题    
     }
     // 炸板表格
-    function set_table_broke(data) {
+    function set_table_broke(data, tableId) {
         all_theme = [];
         var m_html = ""
         var m_th = ""
@@ -916,8 +920,10 @@
             m_html += "</tr>"
         }
         var tb = document.getElementById("broke"); //获取表格的dom节点
-        // var caption = "<caption align=\"top\">炸板-" + m_list.length + "</caption>"
         tb.innerHTML = m_th + m_html
+        var caption = "<caption align=\"top\">炸板-" + m_list.length + "</caption>"
+        var cap = document.getElementById(tableId).createCaption();//创建标题
+        cap.innerHTML = caption
         $("#broke-now").trigger("update");//ajax动态生成table时，jquery的tablesorter失效问题   
     }
 

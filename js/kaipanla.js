@@ -311,7 +311,7 @@ function newStockRanking(date, callback) {
 
 
 // 炸板
-function get_broke() {
+function get_broke(tableId) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -335,7 +335,7 @@ function get_broke() {
         success: function (data) {
             var data = eval('(' + data + ')')['list'];//json格式化数据
             // console.log(data);
-            set_table_broke(data);
+            set_table_broke(data, tableId);
         },
         error: function (msg) {
             console.log(msg);
@@ -379,7 +379,7 @@ function fourBoardStocksYesterdayHistory(date) {
 };
 
 // 一板涨停
-function get_daily_limit_performance1(id, caption) {
+function get_daily_limit_performance1(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -402,7 +402,7 @@ function get_daily_limit_performance1(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table1(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -691,7 +691,7 @@ function fourBoardStocksYesterdayHistorySetTable(date, id, caption) {
 };
 
 // 二板涨停
-function get_daily_limit_performance2(id, caption) {
+function get_daily_limit_performance2(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -714,7 +714,7 @@ function get_daily_limit_performance2(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table1(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -724,7 +724,7 @@ function get_daily_limit_performance2(id, caption) {
 };
 
 // 未涨停的昨日一板个股
-function get_daily_notlimit_performance1(id, caption) {
+function get_daily_notlimit_performance1(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -747,7 +747,7 @@ function get_daily_notlimit_performance1(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table2(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -757,7 +757,7 @@ function get_daily_notlimit_performance1(id, caption) {
 };
 
 // 三板涨停
-function threePlate(id, caption) {
+function threePlate(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -780,7 +780,7 @@ function threePlate(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table1(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -790,7 +790,7 @@ function threePlate(id, caption) {
 };
 
 // 未涨停的昨日二板个股
-function twoBoardStocksYesterday(id, caption) {
+function twoBoardStocksYesterday(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -813,7 +813,7 @@ function twoBoardStocksYesterday(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table2(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -823,7 +823,7 @@ function twoBoardStocksYesterday(id, caption) {
 };
 
 // 四板
-function fourPlate(id, caption) {
+function fourPlate(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -846,7 +846,7 @@ function fourPlate(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table1(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -856,7 +856,7 @@ function fourPlate(id, caption) {
 };
 
 // 未涨停的昨日三板个股
-function threeBoardStocksYesterday(id, caption) {
+function threeBoardStocksYesterday(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -879,7 +879,7 @@ function threeBoardStocksYesterday(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table2(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -889,7 +889,7 @@ function threeBoardStocksYesterday(id, caption) {
 };
 
 // 5板或更高
-function fivePlate(id, caption) {
+function fivePlate(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -912,7 +912,7 @@ function fivePlate(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table1(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -922,7 +922,7 @@ function fivePlate(id, caption) {
 };
 
 // 未涨停的昨日四板个股
-function fourBoardStocksYesterday(id, caption) {
+function fourBoardStocksYesterday(caption, tbodyId, tableId, callback) {
     var m_data = []
     $.ajax({
         url: 'https://apphq.longhuvip.com/w1/api/index.php',
@@ -945,7 +945,7 @@ function fourBoardStocksYesterday(id, caption) {
         success: function (data) {
             var data = eval('(' + data + ')')['info'][0];//json格式化数据
             // console.log(data);
-            set_table2(data, id, caption);
+            callback(data, tbodyId, tableId, caption);
         },
         error: function (msg) {
             console.log(msg);
@@ -1206,13 +1206,13 @@ function get_history_limit(date, id, caption, callback) {
         url: url,
         type: 'POST',
         data: {
-            'Order': "1",
-            'st': '60',
+            'Order': "0",
+            'st': '70',
             'a': 'HisDaBanList',
             'c': 'HisHomeDingPan',
             'PhoneOSNew': '1',
             'DeviceID': 'ffffffff-fade-f24e-f9d3-785f00000000',
-            'Index': '0',
+            'Index': '0',//下一组开始的索引
             'Is_st': '1',
             'PidType': '1',
             'apiv': 'w27',
