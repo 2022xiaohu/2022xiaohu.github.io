@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>股票数据获取与表格显示</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            /* width: 1900px; */
+            /* table-layout: fixed; */
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 1px;
+            text-align: center;
+            /* 水平居中 */
+            /* vertical-align: middle; */
+            /* 垂直居中 */
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+                /* 设置包含表格的容器样式，使用flex布局实现水平排列 */
+       .table-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="table-container" id="tableContainer"></div>
+
+    <script>
+        // 定义要发送POST请求的URL
+        const url = 'https://apphwhq.longhuvip.com/w1/api/index.php';
+
+        // 定义要发送的数据
+        const data = {
+            a: 'GetPlateInfo',
+            st: 100,
+            c: 'DailyLimitResumption',
+            PhoneOSNew: 1,
+            DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d',
+            VerSion: '5.16.0.0',
+            Index: 0,
+            apiv: 'w38'
+        };
+
+        // 将数据转换为application/x-www-form-urlencoded格式的字符串
+        const formData = new URLSearchParams();
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+        const body = formData.toString();
+
+        // 设置请求头信息
+        const headers = {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Chrome-like) Safari/537.36'
+        };
+
+        // 发送POST请求
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: body
+        })
+            .then(response => response.json())
+            .then(jsonData => {
+                // 获取表格容器元素
+                const tableContainer = document.getElementById('tableContainer');
+
+                // // 创建表格元素
+                // const table = document.createElement('table');
+                // // // 创建表体并添加数据
+                // const tbody = document.createElement('tbody');
+
+                jsonData.list.forEach((plate) => {
+                    // 创建表格元素
+                    const table = document.createElement('table');
+                    // // 创建表体并添加数据
+                    const tbody = document.createElement('tbody');
+
+                    const row1 = document.createElement('tr');
+                    const cell1 = document.createElement('td');
+                    cell1.colSpan = 5;
+                    cell1.textContent = plate.ZSName + "--" + plate.num + "家涨停";
+                    row1.appendChild(cell1);
+                    tbody.appendChild(row1);
+
+                    const row2 = document.createElement('tr');
+                    const cell2_0 = document.createElement('td');
+                    cell2_0.textContent = "股票代码";
+                    row2.appendChild(cell2_0);
+                    const cell2_1 = document.createElement('td');
+                    cell2_1.textContent = "股票名称";
+                    row2.appendChild(cell2_1);
+                    const cell2_2 = document.createElement('td');
+                    cell2_2.textContent = "涨停时间";
+                    row2.appendChild(cell2_2);
+                    const cell2_3 = document.createElement('td');
+                    cell2_3.textContent = "状态";
+                    row2.appendChild(cell2_3);
+                    const cell2_4 = document.createElement('td');
+                    cell2_4.textContent = "实际流通";
+                    row2.appendChild(cell2_4);
+                    const cell2_5 = document.createElement('td');
+                    cell2_5.textContent = "实际涨幅";
+                    row2.appendChild(cell2_5);
+                    tbody.appendChild(row2);
+
+                    plate.StockList.forEach((stock) => {
+                        const row3 = document.createElement('tr');
+                        const cell3_0 = document.createElement('td');
+                        const cell3_1 = document.createElement('td');
+                        const cell3_2 = document.createElement('td');
+                        const cell3_3 = document.createElement('td');
+                        const cell3_4 = document.createElement('td');
+                        cell3_0.textContent = stock[0];
+                        cell3_1.textContent = stock[1];
+                        let date = new Date(stock[6] * 1000);
+                        let hours = String(date.getHours()).padStart(2, '0');
+                        let minutes = String(date.getMinutes()).padStart(2, '0');
+                        let seconds = String(date.getSeconds()).padStart(2, '0');
+                        cell3_2.textContent = hours + ":" + minutes + ":" + seconds;
+                        cell3_3.textContent = stock[9];
+                        cell3_4.textContent = Math.round(stock[15] / 100000000) + '亿';
+                        row3.appendChild(cell3_0);
+                        row3.appendChild(cell3_1);
+                        row3.appendChild(cell3_2);
+                        row3.appendChild(cell3_3);
+                        row3.appendChild(cell3_4);
+                        tbody.appendChild(row3);
+                    });
+                    table.appendChild(tbody);
+                    tableContainer.appendChild(table);
+                })
+                updateStockData("tableContainer");
+            });
+
+            //判断一个字符串是否只包含数字
+        function isPureNumber(str) {
+            return /^\d+$/.test(str);
+        }
+        function updateStockData(showTable) {
+            console.log("updateStockData ==> ", showTable);
+            // 向https://pchq.kaipanla.com/w1/api/index.php发送请求
+            fetch("https://pchq.kaipanla.com/w1/api/index.php", {
+                "headers": {
+                    "accept": "application/json, text/javascript, */*; q=0.01",
+                    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "sec-ch-ua": "\"Chromium\";v=\"130\", \"Microsoft Edge\";v=\"130\", \"Not?A_Brand\";v=\"99\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\"Windows\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-site"
+                },
+                "referrer": "https://www.kaipanla.com/",
+                "referrerPolicy": "strict-origin-when-cross-origin",
+                "body": "c=StockRanking&a=RealRankingInfo&Date=&RStart=&REnd=&Ratio=6&Type=6&Order=1&index=0&st=6666&UserID=2680&Token=bae452681628d6e8d5984ad81eede16a",
+                "method": "POST",
+                "mode": "cors",
+                "credentials": "omit"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    const stockData = JSON.parse(text);
+                    const bodyRows = document.getElementById(showTable).getElementsByTagName('tr');
+                    for (let i = 0; i < bodyRows.length; i++) {
+                        const excelDataTableBody = bodyRows[i];
+                        if (excelDataTableBody.getElementsByTagName('td')[0] !== undefined) {
+                            if (isPureNumber(excelDataTableBody.getElementsByTagName('td')[0].textContent)) {
+                                // 根据表格列表1的数据匹配并更新表格第五列的数据
+                                stockData.list.some((stock) => {
+                                    // 查找与表格第一列数据匹配的项，提高第五列数据
+                                    const index = excelDataTableBody.getElementsByTagName('td')[0].textContent.indexOf(stock.Code);
+                                    const excelDataTableBody4 = excelDataTableBody.getElementsByTagName('td')[4]
+                                    if (index !== -1) {
+                                        // 根据涨幅正负设置文字颜色
+                                        if (Number(stock.Rate) > 0) {
+                                            excelDataTableBody4.style.color = 'red';
+                                        } else if (Number(stock.Rate) < 0) {
+                                            excelDataTableBody4.style.color = 'green';
+                                        } else {
+                                            excelDataTableBody4.style.color = 'black';
+                                        }
+                                        excelDataTableBody4.textContent = stock.Rate;
+                                        return true;
+                                    } else {
+                                        excelDataTableBody4.textContent = "";
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                })
+                .catch(error => {
+                    console.error("请求失败：", error);
+                });
+        }
+    </script>
+</body>
+
+</html>

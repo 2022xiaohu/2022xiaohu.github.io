@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>整合POST请求、数据处理与表格展示</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tableContainer"></div>
+
+    <script>
+        // 定义要发送POST请求的URL
+        const url = 'https://apphwhq.longhuvip.com/w1/api/index.php';
+
+        // 定义要发送的数据，格式与你提供的示例类似
+        const data = {
+            a: 'GetYTFP_BKHX',
+            c: 'FuPanLa',
+            PhoneOSNew: 1,
+            DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d',
+            VerSion: '5.16.0.0',
+            apiv: 'w38'
+        };
+
+        // 将数据转换为application/x-www-form-urlencoded格式的字符串
+        const formData = new URLSearchParams();
+        for (const key in data) {
+            formData.append(key, data[key]);
+        }
+        const body = formData.toString();
+
+        // 设置请求头信息
+        const headers = {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Chrome-like) Safari/537.36',
+            // 这里的User-Agent可以根据实际情况修改为真实的用户代理信息，上述是示例
+        };
+
+        // 发送POST请求并处理响应
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: body
+        })
+            .then(response => response.json())
+            .then(jsonData => {
+                const tableContainer = document.getElementById('tableContainer');
+
+                jsonData.List.forEach((item) => {
+                    const tableElement = document.createElement('table');
+                    // const tableThead = document.createElement('thead');
+                    // const titleRow = document.createElement('tr');
+                    // const titleCell1 = document.createElement('td');
+                    // const titleCell2 = document.createElement('td');
+                    // const titleCell3 = document.createElement('td');
+                    // const titleCell4 = document.createElement('td');
+                    // const titleCell5 = document.createElement('td');
+                    // const titleCell6 = document.createElement('td');
+
+                    // titleCell1.textContent = '板块代码';
+                    // titleCell2.textContent = '板块名称';
+                    // titleCell3.textContent = '股票数量';
+                    // titleCell4.textContent = '股票ID';
+                    // titleCell5.textContent = '股票名称';
+                    // titleCell6.textContent = '类型';
+                    // titleRow.appendChild(titleCell1);
+                    // titleRow.appendChild(titleCell2);
+                    // titleRow.appendChild(titleCell3);
+                    // titleRow.appendChild(titleCell4);
+                    // titleRow.appendChild(titleCell5);
+                    // titleRow.appendChild(titleCell6);
+                    // tableElement.appendChild(titleRow);
+
+                    // tableThead.appendChild(item.ZSName);
+
+                    const row = document.createElement('tr');
+                    const cell1 = document.createElement('td');
+                    cell1.colSpan = 4;
+                    cell1.textContent = item.ZSName;
+                    row.appendChild(cell1);
+                    tableElement.appendChild(row);
+
+                    item.TD.forEach((tdItem) => {
+                        const row = document.createElement('tr');
+                        const cell1 = document.createElement('td');
+                        cell1.textContent = tdItem.TDType;;
+                        row.appendChild(cell1);
+                        tdItem.Stock.forEach((stockItem) => {
+                            const cell2 = document.createElement('td');
+                            cell2.textContent = stockItem.StockName;
+                            row.appendChild(cell2);
+                        });
+                        
+                        
+                        tableElement.appendChild(row);
+                    });
+                    tableContainer.appendChild(tableElement);
+                });
+            })
+            .catch(error => {
+                console.error('请求出错:', error);
+            });
+    </script>
+</body>
+
+</html>

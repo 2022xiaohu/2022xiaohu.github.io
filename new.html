@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>股票数据查询展示</title>
+    <script src="/js/time.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/fupan_css.css">
+</head>
+
+<body>
+    <!-- 发送请求按钮 -->
+    <button id="sendRequestButton">发送请求1</button>
+    <button id="sendRequest4Button">发送请求2</button>
+    <!-- 用于展示股票数据的表格 -->
+    <table border="1" class="table-one">
+        <thead>
+            <tr>
+                <th onclick="sortTableByColumn(0)">股票代码</th>
+                <th onclick="sortTableByColumn(1)">股票名称</th>
+                <th onclick="sortTableByColumn(2)">涨停时间</th>
+                <th onclick="sortTableByColumn(3)">涨停原因</th>
+                <th onclick="sortTableByColumn(4)">封单</th>
+                <th onclick="sortTableByColumn(5)">成交额</th>
+                <th onclick="sortTableByColumn(6)">实际流通</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <!-- 通过JavaScript实现相关功能 -->
+    <script>
+        // 用于存储表格原始数据的数组
+        let tableData = [];
+
+        // 清空表格内容的函数
+        function clearTable() {
+            const table = document.querySelector('table');
+            const newTbody = document.createElement('tbody');
+            table.replaceChild(newTbody, table.getElementsByTagName('tbody')[0]);
+        }
+
+        // 根据获取到的数据填充表格的函数
+        function updateTableWithData(data) {
+            console.log(data);
+            clearTable();
+            const tbody = document.querySelector('tbody');
+
+            data.info[0].forEach((rowData) => {
+                const row = document.createElement('tr');
+
+                // 股票代码
+                const cellCode = document.createElement('td');
+                cellCode.textContent = rowData[0];
+                row.appendChild(cellCode);
+
+                // 股票名称
+                const cellName = document.createElement('td');
+                cellName.textContent = rowData[1];
+                if(rowData[16] === 1){
+                    cellName.style.background = '#ADD8E6';
+                }
+                row.appendChild(cellName);
+
+                // 涨停时间
+                const cellTime = document.createElement('td');
+                cellTime.textContent = time(rowData[4]);
+                row.appendChild(cellTime);
+
+                // 涨停原因
+                const cellReasonsForDL = document.createElement('td');
+                cellReasonsForDL.textContent = rowData[5] + "(" + rowData[20] + ")";
+                row.appendChild(cellReasonsForDL);
+
+                // 封单
+                const cellSealingOrder = document.createElement('td');
+                cellSealingOrder.textContent = (rowData[6] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellSealingOrder);
+
+                // 成交额
+                const cellTurnover = document.createElement('td');
+                cellTurnover.textContent = (rowData[11] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellTurnover);
+
+                // 实际流通
+                const cellActualCirculation = document.createElement('td');
+                cellActualCirculation.textContent = (rowData[13] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellActualCirculation);
+
+                tbody.appendChild(row);
+
+                // 将每行数据存入tableData数组，方便后续操作（如排序等）
+                tableData.push(rowData);
+            });
+        }
+
+        // 发送API请求的通用函数
+        async function sendApiRequest(apiUrl, requestData) {
+            const formData = new URLSearchParams();
+            for (const key in requestData) {
+                formData.append(key, requestData[key]);
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                });
+
+                if (!response.ok) {
+                    throw new Error(`请求失败，状态码: ${response.status}`);
+                }
+
+                return response.json();
+            } catch (error) {
+                console.error('发送请求出错：', error);
+                if (error instanceof TypeError) {
+                    console.error('可能是网络连接问题，请检查网络设置。');
+                } else if (error instanceof Error && 'status' in error) {
+                    console.error(`请求失败，状态码: ${response.status}`);
+                } else {
+                    console.error('请求处理过程中出现其他错误，请稍后再试。');
+                }
+                throw error;
+            }
+        }
+
+        // 发送第一个请求的函数，绑定到"发送请求1"按钮的点击事件
+        async function sendRequest() {
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 1,
+                Day: '2024-10-08',
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableWithData(result);
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        // 发送第二个请求的函数，绑定到"发送请求2"按钮的点击事件
+        async function sendRequest4() {
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 1,
+                // Day: '2024-11-07',
+                c: 'HomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphwhq', requestData);
+                updateTableWithData(result);
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        //转换成时间戳
+        function timeToTimestamp(timeStr) {
+            // 创建一个表示当天的Date对象
+            let date = new Date();
+            // 将时间字符串拆分成年、月、日、时、分、秒的数组（这里只用到时、分、秒）
+            let timeParts = timeStr.split(":");
+            // 设置Date对象的小时、分钟、秒数
+            date.setHours(parseInt(timeParts[0]));
+            date.setMinutes(parseInt(timeParts[1]));
+            date.setSeconds(parseInt(timeParts[2]));
+
+            // 获取时间戳
+            let timestamp = date.getTime();
+
+            return timestamp;
+        }
+
+        // 根据点击的表头列索引对表格进行排序的函数
+        function sortTableByColumn(columnIndex) {
+            const table = document.querySelector('table');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            // 将表格行数据转换为数组形式，方便排序操作
+            let rowsArray = [];
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+                let cellValue;
+
+                if (columnIndex === 0) {
+                    cellValue = cells[columnIndex].textContent;
+                } else if (columnIndex === 1) {
+                    cellValue = cells[columnIndex].textContent;
+                } else if (columnIndex === 2) {
+                    cellValue = timeToTimestamp(cells[columnIndex].textContent);
+                } else if (columnIndex === 3) {
+                    cellValue = cells[columnIndex].textContent;
+                } else if (columnIndex === 4) {
+                    cellValue = parseFloat(cells[columnIndex].textContent.replace('亿', '')) * 100000000;
+                } else if (columnIndex === 5) {
+                    cellValue = parseFloat(cells[columnIndex].textContent.replace('亿', '')) * 100000000;
+                } else if (columnIndex === 6) {
+                    cellValue = parseFloat(cells[columnIndex].textContent.replace('亿', '')) * 100000000;
+                }
+
+                rowsArray.push({ row: row, value: cellValue });
+            }
+
+            // 根据列数据类型进行排序
+            if (columnIndex === 2) {
+                rowsArray.sort((a, b) => {
+                    return a.value - b.value;
+                });
+            } else {
+                rowsArray.sort((a, b) => {
+                    if (a.value < b.value) return -1;
+                    if (a.value > b.value) return 1;
+                    return 0;
+                });
+            }
+
+            // 清空原表格内容
+            clearTable();
+            const tableNew = document.querySelector('table');
+            const tbodyNew = tableNew.getElementsByTagName('tbody')[0];
+
+            // 将排序后的行重新添加到表格中
+            rowsArray.forEach(({ row }) => {
+                tbodyNew.appendChild(row);
+            });
+        }
+
+        // 在页面加载完成后，给按钮绑定点击事件
+        window.onload = function () {
+            const sendRequestButton = document.getElementById('sendRequestButton');
+            const sendRequest4Button = document.getElementById('sendRequest4Button');
+
+            sendRequestButton.onclick = sendRequest;
+            sendRequest4Button.onclick = sendRequest4;
+        };
+    </script>
+</body>
+
+</html>

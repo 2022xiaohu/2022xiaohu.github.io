@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>读取Excel并显示合并单元格</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+        }
+
+        table {
+            border-collapse: collapse;
+            /* width: 680px; */
+            height: 8px;
+            overflow: auto;
+            margin-right: 10px;
+            float: left;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 1px;
+            text-align: center;
+            /* 水平居中 */
+            vertical-align: middle;
+            /* 垂直居中 */
+            font-size: 14px;
+            color: #569cd6;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="readExcelAndDisplay0()">选择Excel文件</button>
+    <table id="excelDataTable0">
+        <thead>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button onclick="readExcelAndDisplay1()">选择Excel文件</button>
+    <table id="excelDataTable1">
+        <thead>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button onclick="readExcelAndDisplay2()">选择Excel文件</button>
+    <table id="excelDataTable2">
+        <thead>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button onclick="readExcelAndDisplay3()">选择Excel文件</button>
+    <table id="excelDataTable3">
+        <thead>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button onclick="readExcelAndDisplay4()">选择Excel文件</button>
+    <table id="excelDataTable4">
+        <thead>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        function readExcelAndDisplay0() {
+            readExcelAndDisplay("excelDataTable0")
+        }
+        function readExcelAndDisplay1() {
+            readExcelAndDisplay("excelDataTable1")
+        }
+        function readExcelAndDisplay2() {
+            readExcelAndDisplay("excelDataTable2")
+        }
+        function readExcelAndDisplay3() {
+            readExcelAndDisplay("excelDataTable3")
+        }
+        function readExcelAndDisplay4() {
+            readExcelAndDisplay("excelDataTable4")
+        }
+
+        function readExcelAndDisplay(showTable) {
+            // 读取Excel文件并显示的函数逻辑，保持不变
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.xlsx,.xls';
+            input.onchange = function (e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    // 获取合并单元格信息
+                    const merges = worksheet['!merges'];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    const table = document.getElementById(showTable);
+                    table.innerHTML = '';
+                    isAddImg = false;
+                    for (let i = 0; i < jsonData.length; i++) {
+                        const tableRow = document.createElement('tr');
+                        for (let j = 0; j < jsonData[i].length; j++) {
+                            const tableCell = document.createElement('td');
+                            tableCell.textContent = jsonData[i][j];
+                            if (isPureNumber(jsonData[i][j])) {
+                                isAddImg = true;
+                            }
+                            // 检查当前单元格是否在合并单元格范围内
+                            for (let k = 0; k < merges.length; k++) {
+                                const merge = merges[k];
+                                if (i >= merge.s.r && i <= merge.e.r && j >= merge.s.c && j <= merge.e.c) {
+                                    tableCell.setAttribute('colspan', merge.e.c - merge.s.c + 1);
+                                    tableCell.setAttribute('rowspan', merge.e.r - merge.s.r + 1);
+                                    break;
+                                }
+                            }
+                            tableRow.appendChild(tableCell);
+                        }
+                        if (isAddImg) {
+                            // 创建一个图片元素
+                            const img = document.createElement('img');
+                            if (jsonData[i][0].startsWith('6')) {
+                                img.src = 'https://image.sinajs.cn/newchart/daily/n/sh' + jsonData[i][0] + '.gif';
+                            } else if (jsonData[i][0].startsWith('0') || jsonData[i][0].startsWith('0') || jsonData[i][0].startsWith('3')) {
+                                img.src = 'https://image.sinajs.cn/newchart/daily/n/sz' + jsonData[i][0] + '.gif';
+                            }
+                            const tableCell = document.createElement('td');
+                            // 将图片元素添加到单元格中
+                            tableCell.appendChild(img);
+                            tableRow.appendChild(tableCell);
+                        }
+                        table.appendChild(tableRow);
+                    }
+                    // updateStockData(showTable);
+                    // 使用setInterval每隔5秒执行一次获取涨幅数据的操作
+                    // 使用 setInterval 并传递参数
+                    // setInterval(function () {
+                    //     const data = { showTable: showTable };
+                    //     updateStockData(data);
+                    // }, 5000);
+                    setInterval(() => updateStockData({ showTable }), 5000);
+                };
+                reader.readAsArrayBuffer(file);
+            };
+            input.click();
+
+        }
+        //判断一个字符串是否只包含数字
+        function isPureNumber(str) {
+            return /^\d+$/.test(str);
+        }
+        function updateStockData(showTable) {
+            console.log("updateStockData ==> ", showTable);
+            // 向https://pchq.kaipanla.com/w1/api/index.php发送请求
+            fetch("https://pchq.kaipanla.com/w1/api/index.php", {
+                "headers": {
+                    "accept": "application/json, text/javascript, */*; q=0.01",
+                    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "sec-ch-ua": "\"Chromium\";v=\"130\", \"Microsoft Edge\";v=\"130\", \"Not?A_Brand\";v=\"99\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\"Windows\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-site"
+                },
+                "referrer": "https://www.kaipanla.com/",
+                "referrerPolicy": "strict-origin-when-cross-origin",
+                "body": "c=StockRanking&a=RealRankingInfo&Date=&RStart=&REnd=&Ratio=5&Type=6&Order=1&index=0&st=5555&UserID=2680&Token=bae452681628d6e8d5984ad81eede16a",
+                "method": "POST",
+                "mode": "cors",
+                "credentials": "omit"
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    const stockData = JSON.parse(text);
+                    const bodyRows = document.getElementById(showTable.showTable).getElementsByTagName('tr');
+                    for (let i = 0; i < bodyRows.length; i++) {
+                        const excelDataTableBody = bodyRows[i];
+                        if (excelDataTableBody.getElementsByTagName('td')[0] !== undefined) {
+                            if (isPureNumber(excelDataTableBody.getElementsByTagName('td')[0].textContent)) {
+                                // 根据表格列表1的数据匹配并更新表格第五列的数据
+                                stockData.list.some((stock) => {
+                                    // 查找与表格第一列数据匹配的项，提高第五列数据
+                                    const index = excelDataTableBody.getElementsByTagName('td')[0].textContent.indexOf(stock.Code);
+                                    const excelDataTableBody4 = excelDataTableBody.getElementsByTagName('td')[4]
+                                    if (index !== -1) {
+                                        // 根据涨幅正负设置文字颜色
+                                        if (Number(stock.Rate) > 0) {
+                                            excelDataTableBody4.style.color = 'red';
+                                        } else if (Number(stock.Rate) < 0) {
+                                            excelDataTableBody4.style.color = 'green';
+                                        } else {
+                                            excelDataTableBody4.style.color = 'black';
+                                        }
+                                        excelDataTableBody4.textContent = stock.Rate;
+                                        return true;
+                                    } else {
+                                        excelDataTableBody4.textContent = "";
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                })
+                .catch(error => {
+                    console.error("请求失败：", error);
+                });
+        }
+
+        // 在页面加载完成后执行获取股票数据的操作
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOMContentLoaded event fired!');
+            // updateStockData();
+        });
+
+        // 使用setInterval每隔5秒执行一次获取涨幅数据的操作
+        // setInterval(updateStockData, 5000);
+    </script>
+</body>
+
+</html>
