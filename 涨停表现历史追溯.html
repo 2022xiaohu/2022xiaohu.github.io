@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>股票数据查询展示</title>
+    <script src="./js/time.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/fupan_css.css">
+    <style>
+        /* 表格容器样式 */
+        .table-container {
+            background-color: white;
+            border-radius: 1px;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+            margin: 1px auto;
+            max-width: 800px;
+            padding: 1px;
+            /* 设置表格容器在垂直方向溢出时显示滚动条 */
+            overflow-y: auto;
+            height: 46vh;
+        }
+
+        /* 每个表格区域外的标题样式 */
+        .table-title {
+            color: #ff0000;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            text-align: center;
+            font-size: 18px;
+            /* 可适当缩小字体大小，使整体更紧凑，可根据实际需求调整 */
+        }
+
+        /* 整体容器样式 */
+        .date-container {
+            margin: 20px auto;
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 布局 -->
+    <div style="float:left;">
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">一板</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="FirstDailyLimit">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'FirstDailyLimit')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'FirstDailyLimit')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'FirstDailyLimit')">涨停时间</th>
+                        <th onclick="sortTableByColumn(2, 'FirstDailyLimit')">涨停原因</th>
+                        <th onclick="sortTableByColumn(3, 'FirstDailyLimit')">封单</th>
+                        <th onclick="sortTableByColumn(4, 'FirstDailyLimit')">成交额</th>
+                        <th onclick="sortTableByColumn(5, 'FirstDailyLimit')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">今日首板破板个股</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="FirstDailyLimitBrk">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'FirstDailyLimitBrk')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'FirstDailyLimitBrk')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'FirstDailyLimitBrk')">涨幅</th>
+                        <th onclick="sortTableByColumn(2, 'FirstDailyLimitBrk')">板块</th>
+                        <!-- <th onclick="sortTableByColumn(4, 'FirstDailyLimit')">封单</th> -->
+                        <th onclick="sortTableByColumn(3, 'FirstDailyLimitBrk')">成交额</th>
+                        <th onclick="sortTableByColumn(4, 'FirstDailyLimitBrk')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="float:left;">
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">二板</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="SecondDailyLimit">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'SecondDailyLimit')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'SecondDailyLimit')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'SecondDailyLimit')">涨停时间</th>
+                        <th onclick="sortTableByColumn(2, 'SecondDailyLimit')">涨停原因</th>
+                        <th onclick="sortTableByColumn(3, 'SecondDailyLimit')">封单</th>
+                        <th onclick="sortTableByColumn(4, 'SecondDailyLimit')">成交额</th>
+                        <th onclick="sortTableByColumn(5, 'SecondDailyLimit')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">未涨停的昨日一板个股</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="NotReachLimitLast1">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'NotReachLimitLast1')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'NotReachLimitLast1')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'NotReachLimitLast1')">涨幅</th>
+                        <th onclick="sortTableByColumn(2, 'NotReachLimitLast1')">板块</th>
+                        <!-- <th onclick="sortTableByColumn(4, 'NotReachLimitLast1')">封单</th> -->
+                        <th onclick="sortTableByColumn(3, 'NotReachLimitLast1')">成交额</th>
+                        <th onclick="sortTableByColumn(4, 'NotReachLimitLast1')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="float:left;">
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">三板</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="ThirdDailyLimit">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'ThirdDailyLimit')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'ThirdDailyLimit')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'ThirdDailyLimit')">涨停时间</th>
+                        <th onclick="sortTableByColumn(2, 'ThirdDailyLimit')">涨停原因</th>
+                        <th onclick="sortTableByColumn(3, 'ThirdDailyLimit')">封单</th>
+                        <th onclick="sortTableByColumn(4, 'ThirdDailyLimit')">成交额</th>
+                        <th onclick="sortTableByColumn(5, 'ThirdDailyLimit')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">未涨停的昨日二板个股</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="NotReachLimitLast2">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'NotReachLimitLast2')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'NotReachLimitLast2')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'NotReachLimitLast2')">涨幅</th>
+                        <th onclick="sortTableByColumn(2, 'NotReachLimitLast2')">板块</th>
+                        <!-- <th onclick="sortTableByColumn(4, 'NotReachLimitLast2')">封单</th> -->
+                        <th onclick="sortTableByColumn(3, 'NotReachLimitLast2')">成交额</th>
+                        <th onclick="sortTableByColumn(4, 'NotReachLimitLast2')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="float:left;">
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">四板</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="FourthDailyLimit">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'FourthDailyLimit')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'FourthDailyLimit')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'FourthDailyLimit')">涨停时间</th>
+                        <th onclick="sortTableByColumn(2, 'FourthDailyLimit')">涨停原因</th>
+                        <th onclick="sortTableByColumn(3, 'FourthDailyLimit')">封单</th>
+                        <th onclick="sortTableByColumn(4, 'FourthDailyLimit')">成交额</th>
+                        <th onclick="sortTableByColumn(5, 'FourthDailyLimit')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">未涨停的昨日三板个股</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="NotReachLimitLast3">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'NotReachLimitLast3')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'NotReachLimitLast3')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'NotReachLimitLast3')">涨幅</th>
+                        <th onclick="sortTableByColumn(2, 'NotReachLimitLast3')">板块</th>
+                        <!-- <th onclick="sortTableByColumn(4, 'NotReachLimitLast3')">封单</th> -->
+                        <th onclick="sortTableByColumn(3, 'NotReachLimitLast3')">成交额</th>
+                        <th onclick="sortTableByColumn(4, 'NotReachLimitLast3')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="float:left;">
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">更高</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="HigherDailyLimit">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'HigherDailyLimit')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'HigherDailyLimit')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'HigherDailyLimit')">涨停时间</th>
+                        <th onclick="sortTableByColumn(2, 'HigherDailyLimit')">涨停原因</th>
+                        <th onclick="sortTableByColumn(3, 'HigherDailyLimit')">封单</th>
+                        <th onclick="sortTableByColumn(4, 'HigherDailyLimit')">成交额</th>
+                        <th onclick="sortTableByColumn(5, 'HigherDailyLimit')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- 第一个表格区域外的标题 -->
+        <h2 class="table-title">未涨停的昨日四板及以上个股</h2>
+        <div class="table-container">
+            <!-- 用于展示股票数据的表格 -->
+            <table border="1" class="table-one" id="NotReachLimitLast4">
+                <thead>
+                    <tr>
+                        <!-- <th onclick="sortTableByColumn(0, 'NotReachLimitLast4')">股票代码</th> -->
+                        <th onclick="sortTableByColumn(0, 'NotReachLimitLast4')">股票名称</th>
+                        <th onclick="sortTableByColumn(1, 'NotReachLimitLast4')">涨幅</th>
+                        <th onclick="sortTableByColumn(2, 'NotReachLimitLast4')">板块</th>
+                        <!-- <th onclick="sortTableByColumn(4, 'NotReachLimitLast4')">封单</th> -->
+                        <th onclick="sortTableByColumn(3, 'NotReachLimitLast4')">成交额</th>
+                        <th onclick="sortTableByColumn(4, 'NotReachLimitLast4')">实际流通</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="date-container" style="float:left;">
+        <button onclick="decrementDate()">&lt;</button>
+        <input type="date" id="dateInput">
+        <button onclick="incrementDate()">&gt;</button>
+    </div>
+    <p id="result"></p>
+    <!-- 通过JavaScript实现相关功能 -->
+    <script>
+        const currentDate = new Date();
+        function date() {
+            // 确保初始日期是股市开盘日期
+            while (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            document.getElementById('dateInput').valueAsDate = currentDate;
+            return currentDate;
+        }
+        function decrementDate() {
+            currentDate.setDate(currentDate.getDate() - 1);
+            // 如果减到了周末，继续往前推到上一个开盘日
+            while (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+                currentDate.setDate(currentDate.getDate() - 1);
+            }
+            document.getElementById('dateInput').valueAsDate = currentDate;
+            run(currentDate);
+        }
+
+        function incrementDate() {
+            currentDate.setDate(currentDate.getDate() + 1);
+            // 如果加到了周末，继续往后推到下一个开盘日
+            while (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            document.getElementById('dateInput').valueAsDate = currentDate;
+            run(currentDate);
+        }
+    </script>
+    <script>
+        // 用于存储表格原始数据的数组
+        let tableData = [];
+
+        // 清空表格内容的函数
+        function clearTable(tableTmp) {
+            const table = document.getElementById(tableTmp);
+            const newTbody = document.createElement('tbody');
+            table.replaceChild(newTbody, table.getElementsByTagName('tbody')[0]);
+        }
+
+        // 根据获取到的数据填充表格的函数
+        function updateTableWithData(data, table) {
+            console.log(data);
+            clearTable(table);
+            const tbody = document.getElementById(table).getElementsByTagName('tbody')[0];
+
+            data.info[0].forEach((rowData) => {
+                const row = document.createElement('tr');
+
+                // // 股票代码
+                // const cellCode = document.createElement('td');
+                // cellCode.textContent = rowData[0];
+                // row.appendChild(cellCode);
+
+                // 股票名称
+                const cellName = document.createElement('td');
+                cellName.textContent = rowData[1];
+                if (rowData[16] === 1) {
+                    cellName.style.background = '#ADD8E6';
+                }
+                row.appendChild(cellName);
+
+                // 涨停时间
+                const cellTime = document.createElement('td');
+                cellTime.textContent = time(rowData[4]);
+                row.appendChild(cellTime);
+
+                // 涨停原因
+                const cellReasonsForDL = document.createElement('td');
+                cellReasonsForDL.textContent = rowData[5] + "(" + rowData[20] + ")";
+                row.appendChild(cellReasonsForDL);
+
+                // 封单
+                const cellSealingOrder = document.createElement('td');
+                cellSealingOrder.textContent = (rowData[6] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellSealingOrder);
+
+                // 成交额
+                const cellTurnover = document.createElement('td');
+                cellTurnover.textContent = (rowData[11] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellTurnover);
+
+                // 实际流通
+                const cellActualCirculation = document.createElement('td');
+                cellActualCirculation.textContent = (rowData[13] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellActualCirculation);
+
+                tbody.appendChild(row);
+
+                // 将每行数据存入tableData数组，方便后续操作（如排序等）
+                tableData.push(rowData);
+            });
+        }
+
+        // 根据获取到的数据填充表格的函数
+        function updateTableBrkWithData(data, table) {
+            console.log(data);
+            clearTable(table);
+            const tbody = document.getElementById(table).getElementsByTagName('tbody')[0];
+
+            data.info[0].forEach((rowData) => {
+                const row = document.createElement('tr');
+
+                // // 股票代码
+                // const cellCode = document.createElement('td');
+                // cellCode.textContent = rowData[0];
+                // row.appendChild(cellCode);
+
+                // 股票名称
+                const cellName = document.createElement('td');
+                cellName.textContent = rowData[1];
+                if (rowData[16] === 1) {
+                    cellName.style.background = '#ADD8E6';
+                }
+                row.appendChild(cellName);
+
+                // 涨幅
+                const cellGain = document.createElement('td');
+                cellGain.textContent = rowData[5].toFixed(2);
+                if (rowData[5] < 0) {
+                    cellGain.style.color = 'green';
+                } else if (rowData[5] > 0) {
+                    cellGain.style.color = 'red';
+                }
+                row.appendChild(cellGain);
+
+                // 涨停原因
+                const cellReasonsForDL = document.createElement('td');
+                cellReasonsForDL.textContent = rowData[6];
+                row.appendChild(cellReasonsForDL);
+
+                // 成交额
+                const cellTurnover = document.createElement('td');
+                cellTurnover.textContent = (rowData[10] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellTurnover);
+
+                // 实际流通
+                const cellActualCirculation = document.createElement('td');
+                cellActualCirculation.textContent = (rowData[11] / 100000000).toFixed(2) + '亿';
+                row.appendChild(cellActualCirculation);
+
+                tbody.appendChild(row);
+
+                // 将每行数据存入tableData数组，方便后续操作（如排序等）
+                tableData.push(rowData);
+            });
+        }
+
+        // 发送API请求的通用函数
+        async function sendApiRequest(apiUrl, requestData) {
+            const formData = new URLSearchParams();
+            for (const key in requestData) {
+                formData.append(key, requestData[key]);
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                });
+
+                if (!response.ok) {
+                    throw new Error(`请求失败，状态码: ${response.status}`);
+                }
+
+                return response.json();
+            } catch (error) {
+                console.error('发送请求出错：', error);
+                if (error instanceof TypeError) {
+                    console.error('可能是网络连接问题，请检查网络设置。');
+                } else if (error instanceof Error && 'status' in error) {
+                    console.error(`请求失败，状态码: ${response.status}`);
+                } else {
+                    console.error('请求处理过程中出现其他错误，请稍后再试。');
+                }
+                throw error;
+            }
+        }
+
+        // 请求首板破板股
+        async function sendRequest1Brk(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance2',
+                apiv: 'w38',
+                Type: 5,
+                Index: 0,
+                PidType: 1,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 1,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableBrkWithData(result, 'FirstDailyLimitBrk');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        // 请求一板
+        async function sendRequest1(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 1,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableWithData(result, 'FirstDailyLimit');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        // 请求二板
+        async function sendRequest2(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 2,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableWithData(result, 'SecondDailyLimit');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        //未涨停的昨日一板股
+        async function sendRequest2Brk(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance2',
+                apiv: 'w38',
+                Type: 5,
+                Index: 0,
+                PidType: 2,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 1,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableBrkWithData(result, 'NotReachLimitLast1');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        // 请求三板
+        async function sendRequest3(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 3,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableWithData(result, 'ThirdDailyLimit');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        //未涨停的昨日二板股
+        async function sendRequest3Brk(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance2',
+                apiv: 'w38',
+                Type: 5,
+                Index: 0,
+                PidType: 3,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 1,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableBrkWithData(result, 'NotReachLimitLast2');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        // 请求四板
+        async function sendRequest4(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 4,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableWithData(result, 'FourthDailyLimit');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        //未涨停的昨日三板股
+        async function sendRequest4Brk(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance2',
+                apiv: 'w38',
+                Type: 5,
+                Index: 0,
+                PidType: 4,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 1,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableBrkWithData(result, 'NotReachLimitLast3');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        // 请求更高板
+        async function sendRequestHigher(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance',
+                apiv: 'w38',
+                Type: 4,
+                Index: 0,
+                PidType: 5,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 0,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableWithData(result, 'HigherDailyLimit');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        //未涨停的昨日四板及以上个股
+        async function sendRequestHigherBrk(currentDate) {
+            const day = currentDate.getFullYear()+'-'+(currentDate.getMonth() + 1).toString().padStart(2, '0')+'-'+currentDate.getDate().toString().padStart(2, '0');
+            const requestData = {
+                st: 6666,
+                a: 'DailyLimitPerformance2',
+                apiv: 'w38',
+                Type: 5,
+                Index: 0,
+                PidType: 5,
+                Day: day,
+                c: 'HisHomeDingPan',
+                VerSion: '5.16-0.0',
+                Order: 1,
+                PhoneOSNew: 1,
+                DeviceID: '00000000-68e5-6908-ffff-ffff9a50455d'
+            };
+
+            try {
+                const result = await sendApiRequest('/apphis', requestData);
+                updateTableBrkWithData(result, 'NotReachLimitLast4');
+            } catch (error) {
+                // 这里可以根据具体需求进行进一步处理，比如向用户显示错误提示等
+            }
+        }
+
+        //转换成时间戳
+        function timeToTimestamp(timeStr) {
+            // 创建一个表示当天的Date对象
+            let date = new Date();
+            // 将时间字符串拆分成年、月、日、时、分、秒的数组（这里只用到时、分、秒）
+            let timeParts = timeStr.split(":");
+            // 设置Date对象的小时、分钟、秒数
+            date.setHours(parseInt(timeParts[0]));
+            date.setMinutes(parseInt(timeParts[1]));
+            date.setSeconds(parseInt(timeParts[2]));
+
+            // 获取时间戳
+            let timestamp = date.getTime();
+
+            return timestamp;
+        }
+
+        // 根据点击的表头列索引对表格进行排序的函数
+        function sortTableByColumn(columnIndex, tableTmp) {
+            const table = document.getElementById(tableTmp);
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            // 将表格行数据转换为数组形式，方便排序操作
+            let rowsArray = [];
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+                let cellValue;
+
+                if (columnIndex === 0) {
+                    cellValue = cells[columnIndex].textContent;
+                } else if (columnIndex === 1) {
+                    cellValue = cells[columnIndex].textContent;
+                } else if (columnIndex === 2) {
+                    cellValue = timeToTimestamp(cells[columnIndex].textContent);
+                } else if (columnIndex === 3) {
+                    cellValue = cells[columnIndex].textContent;
+                } else if (columnIndex === 4) {
+                    cellValue = parseFloat(cells[columnIndex].textContent.replace('亿', '')) * 100000000;
+                } else if (columnIndex === 5) {
+                    cellValue = parseFloat(cells[columnIndex].textContent.replace('亿', '')) * 100000000;
+                } else if (columnIndex === 6) {
+                    cellValue = parseFloat(cells[columnIndex].textContent.replace('亿', '')) * 100000000;
+                }
+
+                rowsArray.push({ row: row, value: cellValue });
+            }
+
+            // 根据列数据类型进行排序
+            if (columnIndex === 2) {
+                rowsArray.sort((a, b) => {
+                    return a.value - b.value;
+                });
+            } else {
+                rowsArray.sort((a, b) => {
+                    if (a.value < b.value) return -1;
+                    if (a.value > b.value) return 1;
+                    return 0;
+                });
+            }
+
+            // 清空原表格内容
+            clearTable(tableTmp);
+            const tableNew = document.getElementById(tableTmp);
+            const tbodyNew = tableNew.getElementsByTagName('tbody')[0];
+
+            // 将排序后的行重新添加到表格中
+            rowsArray.forEach(({ row }) => {
+                tbodyNew.appendChild(row);
+            });
+        }
+
+        function run(currentDate) {
+            sendRequest1(currentDate);
+            sendRequest1Brk(currentDate);
+            sendRequest2(currentDate);
+            sendRequest2Brk(currentDate);
+            sendRequest3(currentDate);
+            sendRequest3Brk(currentDate);
+            sendRequest4(currentDate);
+            sendRequest4Brk(currentDate);
+            sendRequestHigher(currentDate);
+            sendRequestHigherBrk(currentDate);
+        }
+        // 在页面加载完成后，给按钮绑定点击事件
+        window.onload = function () {
+            run(date());
+            // 使用setInterval设置每5秒执行一次myFunction函数
+            // let intervalId = setInterval(run, 5000);
+
+        };
+    </script>
+</body>
+
+</html>

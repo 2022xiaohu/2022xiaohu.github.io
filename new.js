@@ -21,7 +21,7 @@ app.post('/apphis', async (req, res) => {
         // 将前端发送的数据转换为URLSearchParams格式
         const formData = new URLSearchParams();
 
-        // console.log('req===>',req.body);
+        console.log('req===>',req.body);
         for (const key in req.body) {
             // console.log('axios');
             formData.append(key, req.body[key]);
@@ -33,7 +33,7 @@ app.post('/apphis', async (req, res) => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        // console.log('axios');
+        console.log('axios');
         res.json(response.data);
         console.log(response.data);
     } catch (error) {
